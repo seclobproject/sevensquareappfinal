@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sevensquare/screens/members/widgets/add_members.dart';
 
 import '../../resources/color.dart';
 
@@ -154,6 +155,19 @@ class _memberspageState extends State<memberspage> {
           ),
 
         ],
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100)),
+        child: Icon(Icons.add),
+        backgroundColor: yellow,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const addmembers()),
+          );
+        },
       ),
 
     );

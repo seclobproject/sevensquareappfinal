@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../commonpage/profilepage.dart';
+import '../commonpage/withdrawal.dart';
 import '../resources/color.dart';
 
 class appdrawer extends StatefulWidget {
@@ -27,40 +29,56 @@ class _appdrawerState extends State<appdrawer> {
 
           SizedBox(height: 100,),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const profilepage()),
+              );
+            },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/profile.svg',
-                    fit: BoxFit.cover,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/profile.svg',
+                      fit: BoxFit.cover,
+                    ),
 
-                  SizedBox(width: 25,),
+                    SizedBox(width: 25,),
 
-                  Text('Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
-                ],
+                    Text('Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
+                  ],
+                ),
               ),
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const withdrawal()),
+              );
+            },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/withdrawal.svg',
-                    fit: BoxFit.cover,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/withdrawal.svg',
+                      fit: BoxFit.cover,
+                    ),
 
-                  SizedBox(width: 25,),
+                    SizedBox(width: 25,),
 
-                  Text('Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
-                ],
+                    Text('Withdrawal',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
+                  ],
+                ),
               ),
             ),
           ),

@@ -129,6 +129,7 @@ const bottomtacolor = Color.fromRGBO(38, 37, 37, 1);
 const redbtm = Color.fromRGBO(218, 54, 41, 1);
 const greenbg = Color.fromRGBO(158, 237, 120, 1);
 const walletinner = Color.fromRGBO(28, 39, 38, 1);
+const greendark = Color.fromRGBO(152, 172, 26, 1);
 
 
 
