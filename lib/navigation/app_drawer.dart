@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../authentication_page/login.dart';
 import '../commonpage/profilepage.dart';
 import '../commonpage/withdrawal.dart';
 import '../resources/color.dart';
@@ -121,21 +122,28 @@ class _appdrawerState extends State<appdrawer> {
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          InkWell(
+            onTap: (){
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => loginpage()),
+                      (route) => false);
+            },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/logout.svg',
-                    fit: BoxFit.cover,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/logout.svg',
+                      fit: BoxFit.cover,
+                    ),
 
-                  SizedBox(width: 25,),
+                    SizedBox(width: 25,),
 
-                  Text('Logout',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
-                ],
+                    Text('Logout',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
+                  ],
+                ),
               ),
             ),
           ),
