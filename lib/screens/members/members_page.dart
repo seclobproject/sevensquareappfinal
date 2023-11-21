@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sevensquare/screens/members/widgets/add_members.dart';
+import 'package:sevensquare/screens/members/widgets/members_inner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/color.dart';
 import '../../services/members_service.dart';
@@ -47,7 +48,10 @@ class _memberspageState extends State<memberspage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _initLoad();
+
+    setState(() {
+      _initLoad();
+    });
   }
 
 
@@ -77,7 +81,7 @@ class _memberspageState extends State<memberspage> {
                 sponser: memberslisting['children'][index]['sponser'],
                 phone: memberslisting['children'][index]['phone'].toString(),
                 status: memberslisting['children'][index]['userStatus'],
-                package: memberslisting['children'][index]['packageChosen'],
+                // package: memberslisting['children'][index]['packageChosen'],
 
               );
             }),
@@ -109,7 +113,7 @@ class membersLiting extends StatelessWidget {
     required this.sponser,
     required this.phone,
     required this.status,
-    required this.package,
+    // required this.package,
     required this.id,
     super.key,
 
@@ -119,17 +123,17 @@ class membersLiting extends StatelessWidget {
   final String sponser;
   final String phone;
   final String status;
-  final String package;
+  // final String package;
   final String id;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => subcategoryproduct(id: id,)),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => membersinner(id: id,)),
+        );
 
       },
       child: Padding(

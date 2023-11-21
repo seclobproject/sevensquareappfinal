@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../navigation/app_drawer.dart';
 import '../../resources/color.dart';
+import '../../services/home_service.dart';
+import '../../support/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -12,6 +15,45 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  bool _isLoading = true;
+  var profilepageapi;
+
+  var userid;
+
+
+  Future profilepage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = (prefs.getString('userid') ?? "");
+    print("userid....$userid");
+    var response = await HomeService.GetProfile();
+    log.i('Profile page. $response');
+
+    setState(() {
+      profilepageapi = response;
+    });
+  }
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initLoad();
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        profilepage()
+      ],
+    );
+    _isLoading = false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -21,7 +63,11 @@ class _homeState extends State<home> {
       endDrawerEnableOpenDragGesture: false,
       drawer: appdrawer(),
 
-      body: SingleChildScrollView(
+      body: _isLoading
+          ? const Center(
+        child: CircularProgressIndicator(),
+      )
+          :SingleChildScrollView(
         child: Column(
           children: [
 
@@ -98,7 +144,7 @@ class _homeState extends State<home> {
             ),
 
             Text("Hello",style: TextStyle(color: yellow,fontSize: 32,fontWeight: FontWeight.w800),),
-            Text("faizy",style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w400),),
+            Text(profilepageapi['name'],style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w400),),
 
             SizedBox(height: 20,),
 
