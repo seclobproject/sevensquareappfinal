@@ -203,7 +203,46 @@ class _homeState extends State<home> {
               ),
             ),
 
-            SizedBox(height: 10,),
+            SizedBox(height: 20,),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 100,
+                width: 444,
+                decoration: BoxDecoration(
+                    color: bottomtacolor,
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Verification pending",style: TextStyle(color: redbtm,fontSize: 17,fontWeight: FontWeight.w600),),
+                              Icon(Icons.access_time,color: redbtm,size: 17,),
+                              Container(
+                                height: 30,
+                                width: 65,
+                                decoration: BoxDecoration(
+                                    color: redbtm,
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Center(child: Text("Verify Now",style: TextStyle(color: bg1,fontSize: 8),)),
+                              )
+                            ],
+                          )),
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -211,8 +250,6 @@ class _homeState extends State<home> {
               height: 400,
               ),
             )
-
-
           ],
         ),
       ),

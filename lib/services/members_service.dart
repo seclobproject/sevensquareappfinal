@@ -31,10 +31,10 @@ class MembersService {
     return response;
   }
 
-  static Future membersPacages() async {
+  static Future membersPackages() async {
     try {
       var dio = await DioHelper.getInstance();
-      var response = await dio.post('$baseURL/api/packages');
+      var response = await dio.get('$baseURL/api/packages');
       return response.data;
     } catch (e) {
       rethrow;

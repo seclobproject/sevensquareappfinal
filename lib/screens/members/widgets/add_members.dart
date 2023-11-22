@@ -16,8 +16,9 @@ class _addmembersState extends State<addmembers> {
 
   var userid;
   var packages;
+  var packagedropdownvalue;
 
-
+  List package = [];
 
   String? name;
   String? email;
@@ -37,6 +38,7 @@ class _addmembersState extends State<addmembers> {
       'phone':phone,
       'address':address,
       "password":password,
+      "packageChosen":packagedropdownvalue['id'],
     };
     print(reqData);
     var response = await MembersService.addmember(reqData);
@@ -52,10 +54,12 @@ class _addmembersState extends State<addmembers> {
 
 
   Future _getpackages() async {
-    var response = await MembersService.membersPacages();
-    log.i('state list.. $response');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await MembersService.membersPackages();
+    log.i('Package list.. $response');
     setState(() {
-      packages = response['states'];
+      package = response['results'];
     });
   }
 
@@ -82,6 +86,7 @@ class _addmembersState extends State<addmembers> {
       backgroundColor: sevensgbg,
       body: SingleChildScrollView(
         child: Column(
+
           children: [
 
             Padding(
@@ -253,65 +258,50 @@ class _addmembersState extends State<addmembers> {
                           child: Text("Choose Package ",style: TextStyle(color: bg1),)),
                     ),
 
-                    Container(
-                      height: 40,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          // onChanged: (text) {
-                          //   setState(() {
-                          //     address=text;
-                          //   });
-                          // },
-                          autocorrect: true,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                         border: Border.all(color:bg1 ),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 35),
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Select Package',
+                                  hintStyle: TextStyle(fontSize: 12,color: bg1)// Remove underline
+                              ),
+                              isExpanded: true,
+                              dropdownColor: sevensgbg,
+                              icon: Icon(Icons.arrow_drop_down, color: bg1),
+                              iconSize: 20,
+                              elevation: 10,
+                              style: TextStyle(color: bg1, fontSize: 15),
+                              items: package.map((item) {
+                                print(item);
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(
+                                    item['amount'].toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                setState(() {
+                                  packagedropdownvalue = newVal;
+                                });
+                              },
+                              value: packagedropdownvalue,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
-                            ),
-                          ),),
+                          ),
+                        ),
                       ),
                     ),
-
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                    //   child: Align(
-                    //       alignment: Alignment.topLeft,
-                    //       child: Text("Package Amount",style: TextStyle(color: bg1),)),
-                    // ),
-                    //
-                    // Container(
-                    //   height: 40,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: 20),
-                    //     child: TextField(
-                    //       autocorrect: true,
-                    //       style: TextStyle(color: Colors.white),
-                    //       decoration: InputDecoration(
-                    //         hintText: '',
-                    //         hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                    //         // filled: true,
-                    //         // fillColor: Colors.white70,
-                    //         enabledBorder: OutlineInputBorder(
-                    //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //           borderSide: BorderSide(color: bg1, width: 1),
-                    //         ),
-                    //         focusedBorder: OutlineInputBorder(
-                    //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //           borderSide: BorderSide(color:  bg1),
-                    //         ),
-                    //       ),),
-                    //   ),
-                    // ),
 
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
