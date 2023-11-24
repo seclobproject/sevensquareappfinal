@@ -43,6 +43,8 @@ dev_dependencies:
   dio: ^5.3.3
   logger: ^1.1.0
   shared_preferences: ^2.2.2
+  image_picker: ^0.8.7+5
+  fluttertoast: ^8.1.2
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
