@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sevensquare/screens/members/widgets/add_members.dart';
 import 'package:sevensquare/screens/members/widgets/members_inner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,8 +67,11 @@ class _memberspageState extends State<memberspage> {
       ),
 
       body:  _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
+          ?  Center(
+        child: SvgPicture.asset(
+          'assets/svg/opsmsg.svg',
+          height: 300,
+        ),
       )
           : Column(
         children: [

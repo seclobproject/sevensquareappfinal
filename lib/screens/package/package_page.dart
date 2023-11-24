@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/color.dart';
 import '../../services/packageService.dart';
@@ -66,6 +67,7 @@ class _packageState extends State<package> {
       )
           :  Column(
         children: [
+          package['userStatus']== "approved" ?
           Expanded(
             child: ListView.builder(
                 itemCount: package['results'].length,
@@ -170,6 +172,24 @@ class _packageState extends State<package> {
                     ),
                   );
                 }),
+          ):
+          package['userStatus'] == "approved" ?
+          Text(
+            "User status is accepted",
+            style: TextStyle(
+              color: Colors.green, // Set the desired color for accepted status text
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ) :
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 150),
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/svg/opsmsg.svg',
+                height: 300,
+              ),
+            ),
           ),
         ],
       ),

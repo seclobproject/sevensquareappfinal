@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../resources/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,8 +65,11 @@ class _walletState extends State<wallet> {
       backgroundColor: sevensgbg,
 
       body: _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
+          ?  Center(
+        child:  SvgPicture.asset(
+          'assets/svg/opsmsg.svg',
+          height: 300,
+        ),
       )
           :Column(
         children: [
