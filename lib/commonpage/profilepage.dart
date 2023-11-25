@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
+import '../services/home_service.dart';
+import '../support/logger.dart';
 import 'forgottpassword.dart';
+import 'package:flutter_svg/svg.dart';
+
 
 class profilepage extends StatefulWidget {
   const profilepage({super.key});
@@ -11,6 +15,45 @@ class profilepage extends StatefulWidget {
 }
 
 class _profilepageState extends State<profilepage> {
+
+  bool _isLoading = true;
+  var profilepageapi;
+
+  var userid;
+
+
+  Future profilepage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = (prefs.getString('userid') ?? "");
+    print("userid....$userid");
+    var response = await HomeService.GetProfile();
+    log.i('Profile page. $response');
+
+    setState(() {
+      profilepageapi = response;
+    });
+  }
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initLoad();
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        profilepage()
+      ],
+    );
+    _isLoading = false;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +67,11 @@ class _profilepageState extends State<profilepage> {
         title: Text("profile",style: TextStyle(color: bg1,fontSize: 16),),
 
       ),
-      body: Column(
+      body:   _isLoading
+          ?  Center(
+        child: CircularProgressIndicator()
+      )
+          :  Column(
 
         children: [
 

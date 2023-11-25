@@ -53,7 +53,6 @@ class _walletState extends State<wallet> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

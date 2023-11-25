@@ -150,18 +150,27 @@ class _loginpageState extends State<loginpage> {
               child: TextField(
                 autocorrect: true,
                 style: TextStyle(color: Colors.white),
+                obscureText: hidePassword, //show/hide password
                 decoration: InputDecoration(
-                  hintText: 'Enter your password',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  // filled: true,
-                  // fillColor: Colors.white70,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     borderSide: BorderSide(color: bg1, width: 1),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color:  bg1),
+                    borderSide: BorderSide(color: bg1),
+                  ),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
                   ),
                 ),
 

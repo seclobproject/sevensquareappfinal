@@ -187,10 +187,11 @@ class _packageState extends State<package> {
             child: Center(
               child: SvgPicture.asset(
                 'assets/svg/opsmsg.svg',
-                height: 300,
+                height: 250,
               ),
             ),
           ),
+
         ],
       ),
 
