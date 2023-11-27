@@ -19,6 +19,7 @@ class _walletState extends State<wallet> {
   var userid;
   var walletlist;
   bool _isLoading = true;
+  List<int> unrealisedEarning = [];
 
 
   Future _getwallet() async {
@@ -27,8 +28,10 @@ class _walletState extends State<wallet> {
     var response = await WalletService.wallets();
     log.i('Wallet list.. $response');
     print(walletlist);
+
     setState(() {
       walletlist = response;
+      unrealisedEarning = (walletlist['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
     });
   }
 
@@ -107,7 +110,7 @@ class _walletState extends State<wallet> {
                             Text(walletlist['earning'].toString(),style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
                             Align(
 
-                                child: Text("₹500",style: TextStyle(color: greenbg,fontSize: 18,fontWeight: FontWeight.w700,),)),
+                                child: Text("₹${unrealisedEarning[0]}",style: TextStyle(color: greenbg,fontSize: 18,fontWeight: FontWeight.w700,),)),
                           ],
                         )),
 
@@ -147,7 +150,7 @@ class _walletState extends State<wallet> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: walletlist['transactionHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical:5,horizontal: 20),

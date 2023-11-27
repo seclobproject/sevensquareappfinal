@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:sevensquare/commonpage/withdrawal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../navigation/bottom_tabs_screen.dart';
 import '../resources/color.dart';
+import '../services/withdrawal_service.dart';
+import '../support/logger.dart';
 
 class withdrawalrequst extends StatefulWidget {
   const withdrawalrequst({super.key});
@@ -10,6 +14,42 @@ class withdrawalrequst extends StatefulWidget {
 }
 
 class _withdrawalrequstState extends State<withdrawalrequst> {
+
+
+  TextEditingController amountController = TextEditingController();
+  TextEditingController discountedPriceController = TextEditingController();
+
+
+  var userid;
+  var packages;
+  var packagedropdownvalue;
+
+  List package = [];
+
+
+  String? amount;
+
+
+  Future addammount() async {
+    setState(() {
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var reqData = {
+      'amount': amount,
+    };
+    print(reqData);
+    var response = await WithdrawalService.withdrawal(reqData);
+    log.i('leave create . $response');
+    setState(() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => withdrawal()),
+      );
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -31,7 +71,7 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
-              height: 320,
+              height: 240,
               width: 444,
               decoration: BoxDecoration(
                   border: Border.all(
@@ -60,10 +100,15 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextField(
+                        controller: amountController,
                         autocorrect: true,
                         style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          updateDiscountedPrice();
+                        },
                         decoration: InputDecoration(
-                          hintText: 'Enter your New Conform Password',
+                          hintText: 'Enter your Amount',
                           hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
                           // filled: true,
                           // fillColor: Colors.white70,
@@ -72,7 +117,7 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                             borderSide: BorderSide(color: bg1, width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
                             borderSide: BorderSide(color:  bg1),
                           ),
                         ),),
@@ -97,60 +142,26 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextField(
+                        controller: discountedPriceController,
                         autocorrect: true,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          hintText: '',
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                          // filled: true,
-                          // fillColor: Colors.white70,
+                          hintText: 'Discounted Price',
+                          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: bg1, width: 1),
+                            borderSide: BorderSide(color: Colors.blue, width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(color:  bg1),
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: Colors.blue),
                           ),
-                        ),),
+                        ),
+                      ),
                     ),
                   ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("Total Amount",style: TextStyle(color: bg1),)),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    height: 40,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: TextField(
-                        autocorrect: true,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: '',
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                          // filled: true,
-                          // fillColor: Colors.white70,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: bg1, width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(color:  bg1),
-                          ),
-                        ),),
-                    ),
-                  ),
+
 
                   SizedBox(height: 20,),
 
@@ -172,15 +183,20 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
 
                         SizedBox(width: 10,),
 
-                        Container(
-                          height: 25,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(5))
+                        GestureDetector(
+                          onTap: (){
+                            addammount();
+                          },
+                          child: Container(
+                            height: 25,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(5))
+                            ),
+                            child: Center(
+                                child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w600),)),
                           ),
-                          child: Center(
-                              child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w600),)),
                         ),
                       ],
                     ),
@@ -197,4 +213,17 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
 
     );
   }
+
+
+  void updateDiscountedPrice() {
+    if (amountController.text.isNotEmpty) {
+      double amount = double.parse(amountController.text);
+      double discountedPrice = amount - (0.10 * amount); // 10% discount
+      discountedPriceController.text = discountedPrice.toStringAsFixed(2);
+    } else {
+      discountedPriceController.text = '';
+    }
+  }
+
 }
+

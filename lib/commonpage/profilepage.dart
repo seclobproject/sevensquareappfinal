@@ -102,9 +102,9 @@ class _profilepageState extends State<profilepage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Faizy',style: TextStyle(color: bg1),),
-                  Text('Seclobclt@gmail.com',style: TextStyle(color: bg1)),
-                  Text('9995544121',style: TextStyle(color: bg1)),
+                  Text(profilepageapi['name'],style: TextStyle(color: bg1),),
+                  Text(profilepageapi['email'],style: TextStyle(color: bg1)),
+                  Text(profilepageapi['phone'].toString(),style: TextStyle(color: bg1)),
                 ],
               ),
             ),

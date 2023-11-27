@@ -11,4 +11,26 @@ class UserpinService {
   }
 
 
+
+  static Future activatedpinlisting() async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.get('$baseURL/api/franchise/get-activated-pins');
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  static Future addactivepin(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/franchise/sell-pin',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

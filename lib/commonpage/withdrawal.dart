@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sevensquare/commonpage/withdrawalrequst.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
+import '../services/wallet_service.dart';
+import '../support/logger.dart';
+
 
 class withdrawal extends StatefulWidget {
   const withdrawal({super.key});
@@ -15,6 +19,44 @@ class _withdrawalState extends State<withdrawal> {
   String dropdownvalue = 'Apple';
 
   var items =  ['Apple','Banana','Grapes','Orange','watermelon','Pineapple'];
+
+  var userid;
+  var walletlist;
+  bool _isLoading = true;
+
+  Future _getwallet() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await WalletService.wallets();
+    log.i('Wallet list.. $response');
+    print(walletlist);
+
+    setState(() {
+      walletlist = response;
+    });
+  }
+
+
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _getwallet()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      _initLoad();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +73,14 @@ class _withdrawalState extends State<withdrawal> {
 
       ),
 
-      body: Column(
+      body: _isLoading
+          ?  Center(
+        child:  SvgPicture.asset(
+          'assets/svg/opsmsg.svg',
+          height: 300,
+        ),
+      )
+          :Column(
         children: [
 
           SizedBox(height: 20,),
@@ -68,7 +117,7 @@ class _withdrawalState extends State<withdrawal> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("₹1000",style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
+                            Text(walletlist['earning'].toString(),style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
                             
                           ],
                         )),

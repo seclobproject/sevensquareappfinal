@@ -5,6 +5,7 @@ import 'package:sevensquare/screens/members/widgets/members_inner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/color.dart';
 import '../../services/members_service.dart';
+import '../../services/userpin_service.dart';
 import '../../support/logger.dart';
 
 class memberspage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _memberspageState extends State<memberspage> {
   var memberslisting;
   bool _isLoading = true;
   var userid;
+  var activatedpinlist;
 
 
 
@@ -40,6 +42,7 @@ class _memberspageState extends State<memberspage> {
     await Future.wait(
       [
         _membersListig(),
+
       ],
     );
     _isLoading = false;

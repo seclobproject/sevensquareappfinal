@@ -3,11 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication_page/package_page.dart';
 import '../../authentication_page/splash.dart';
 import '../../commonpage/image_upload_verify_user.dart';
+import '../../commonpage/test.dart';
 import '../../navigation/app_drawer.dart';
 import '../../resources/color.dart';
 import '../../services/home_service.dart';
 import '../../support/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../members/widgets/activepin_listing.dart';
+import '../members/widgets/userpin_listing.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -101,7 +105,7 @@ class _homeState extends State<home> {
                         onTap: () {
                           // Navigator.push(
                           //   context,
-                          //   MaterialPageRoute(builder: (context) =>  notification()),
+                          //   MaterialPageRoute(builder: (context) =>  DiscountCalculator()),
                           // );
                         },
                         child: Center(
