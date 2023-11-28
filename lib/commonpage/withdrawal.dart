@@ -224,7 +224,7 @@ class _withdrawalState extends State<withdrawal> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: walletlist['transactionHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical:5,horizontal: 20),
@@ -247,7 +247,7 @@ class _withdrawalState extends State<withdrawal> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("₹1000",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
+                            Text(walletlist['transactionHistory'][index]['amount'].toString(),style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                             Text("₹100",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                             Text("₹900",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                            Container(
@@ -257,7 +257,7 @@ class _withdrawalState extends State<withdrawal> {
                                color: greendark,
                                borderRadius: BorderRadius.circular(5),
                              ),
-                             child: Center(child: Text("Accepted",style: TextStyle(fontSize: 10,color: bg1),)),
+                             child: Center(child: Text(walletlist['transactionHistory'][index]['status'],style: TextStyle(fontSize: 10,color: bg1),)),
                            )
 
                           ],

@@ -15,12 +15,11 @@ class wallet extends StatefulWidget {
 }
 
 class _walletState extends State<wallet> {
-
   var userid;
   var walletlist;
   bool _isLoading = true;
   List<int> unrealisedEarning = [];
-
+  double totalUnrealisedAmount = 0.0;
 
   Future _getwallet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -32,48 +31,39 @@ class _walletState extends State<wallet> {
     setState(() {
       walletlist = response;
       unrealisedEarning = (walletlist['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
+      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
     });
   }
 
-
   Future _initLoad() async {
-    await Future.wait(
-      [
-        _getwallet()
-      ],
-    );
+    await Future.wait([_getwallet()]);
     _isLoading = false;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     setState(() {
       _initLoad();
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: sevensgbg,
-        title: Text("Wallet",style: TextStyle(color: bg1,fontSize: 18),),
+        title: Text("Wallet", style: TextStyle(color: bg1, fontSize: 18)),
       ),
-
       backgroundColor: sevensgbg,
-
       body: _isLoading
-          ?  Center(
-        child:  SvgPicture.asset(
+          ? Center(
+        child: SvgPicture.asset(
           'assets/svg/opsmsg.svg',
           height: 300,
         ),
       )
-          :Column(
+          : Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -86,8 +76,7 @@ class _walletState extends State<wallet> {
                     width: 1,
                   ),
                   color: walletinner,
-                  borderRadius: BorderRadius.all(Radius.circular(20))
-              ),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
@@ -98,8 +87,8 @@ class _walletState extends State<wallet> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Total Wallet Amount",style: TextStyle(color: bg1),),
-                            Text("Unrealized Amount",style: TextStyle(color: greenbg,fontSize: 10),),
+                            Text("Total Wallet Amount", style: TextStyle(color: bg1)),
+                            Text("Unrealized Amount", style: TextStyle(color: greenbg, fontSize: 10)),
                           ],
                         )),
                     Align(
@@ -107,128 +96,111 @@ class _walletState extends State<wallet> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(walletlist['earning'].toString(),style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
+                            Text(walletlist['earning'].toString(),
+                                style: TextStyle(color: bg1, fontSize: 18, fontWeight: FontWeight.w700)),
                             Align(
-
-                                child: Text("₹${unrealisedEarning[0]}",style: TextStyle(color: greenbg,fontSize: 18,fontWeight: FontWeight.w700,),)),
+                              child: Text("₹${totalUnrealisedAmount.toStringAsFixed(2)}",
+                                  style: TextStyle(color: greenbg, fontSize: 18, fontWeight: FontWeight.w700)),
+                            ),
                           ],
                         )),
-
-                    SizedBox(height: 15,),
-
+                    SizedBox(
+                      height: 15,
+                    ),
                     Align(
                         alignment: Alignment.topLeft,
-                        child: Text("Please meet the criteria to access the unrealized amount in your wallet.",
-                          style: TextStyle(fontSize: 12,color: bg1),)),
-
+                        child: Text(
+                          "Please meet the criteria to access the unrealized amount in your wallet.",
+                          style: TextStyle(fontSize: 12, color: bg1),
+                        )),
                   ],
                 ),
               ),
             ),
           ),
-
-          SizedBox(height: 25,),
-          
-          
+          SizedBox(
+            height: 25,
+          ),
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Recent Transaction",
-                  style: TextStyle(color: bg1,fontWeight: FontWeight.w700),),
-                Text("View all",style: TextStyle(color: yellow,fontWeight: FontWeight.w400)),
+                Text("Recent Transaction", style: TextStyle(color: bg1, fontWeight: FontWeight.w700)),
+                Text("View all", style: TextStyle(color: yellow, fontWeight: FontWeight.w400)),
               ],
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Divider(thickness: 0.1,color: bg1,),
+            child: Divider(thickness: 0.1, color: bg1),
           ),
-
-
           Expanded(
             child: ListView.builder(
                 itemCount: walletlist['transactionHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical:5,horizontal: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-
                           children: [
                             Container(
                               height: 30,
                               width: 30,
                               decoration: BoxDecoration(
-                                color: yellow,
-                                borderRadius: BorderRadius.all(Radius.circular(10))
-                              ),
+                                  color: yellow, borderRadius: BorderRadius.all(Radius.circular(10))),
                               child: Image.asset(
                                 "assets/logo/trnss.png",
                                 height: 20,
                                 width: 20,
                               ),
                             ),
-
                             SizedBox(width: 10,),
-
-
-
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(walletlist['transactionHistory'][0]['referenceID'],style: TextStyle(color:bg1,fontSize: 10),),
-                                Text("Name",style: TextStyle(color:bg1,fontSize: 10),),
+                                Text(walletlist['transactionHistory'][0]['referenceID'],
+                                    style: TextStyle(color: bg1, fontSize: 10)),
+                                Text("Name", style: TextStyle(color: bg1, fontSize: 10)),
                               ],
                             ),
                             Expanded(child: SizedBox()),
-
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text( '\$${walletlist['transactionHistory'][0]['amount'].toString()}',style: TextStyle(
-                                  color:bg1,fontSize: 12,fontWeight: FontWeight.w800),),
+                              child: Text('\$${walletlist['transactionHistory'][0]['amount'].toString()}',
+                                  style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
                             ),
-
                           ],
                         ),
                         SizedBox(height: 10,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("26 October 2023 10:30 PM",style: TextStyle(fontSize: 8,color: bg1),),
-                            
+                            Text("26 October 2023 10:30 PM", style: TextStyle(fontSize: 8, color: bg1)),
                             Container(
                               height: 20,
                               width: 60,
                               decoration: BoxDecoration(
-                                  color:yellow,
+                                  color: yellow,
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
-                              child: Center(child: Text(walletlist['transactionHistory'][0]['status'],style:
-                              TextStyle(
-                                fontSize: 10,
-
-                              ),)),
+                              child: Center(
+                                  child: Text(walletlist['transactionHistory'][0]['status'],
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ))),
                             )
                           ],
                         ),
-
-                        Divider(thickness: 0.1,color: bg1,),
-
+                        Divider(thickness: 0.1, color: bg1),
                       ],
                     ),
                   );
                 }),
           ),
-
-
         ],
       ),
-
     );
   }
 }
-
