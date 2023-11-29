@@ -67,7 +67,7 @@ class _loginpageState extends State<loginpage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Incorrect Psassword Username  '),
+        content: Text('Incorrect Username and password   '),
       ));
       log.e('Error during login: $error');
     }

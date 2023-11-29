@@ -136,14 +136,24 @@ class _withdrawalState extends State<withdrawal> {
           ),
 
           SizedBox(height: 25,),
-          
-          
+
+
           InkWell(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const withdrawalrequst()),
-              );
+            onTap: () {
+              // Check if earning is greater than 0 before navigating
+              if (int.parse(walletlist['earning'].toString()) > 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const withdrawalrequst()),
+                );
+              } else {
+
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Cannot request withdrawal, earnings are 0.'),
+                ));
+
+                print("Cannot request withdrawal, earnings are 0.");
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -152,12 +162,18 @@ class _withdrawalState extends State<withdrawal> {
                 width: 400,
                 decoration: BoxDecoration(
                   color: yellow,
-                    borderRadius:BorderRadius.all(Radius.circular(10)) ),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
                 child: Center(
-                    child: Text("Request withdrawal money ",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w600,fontSize: 12),)),
+                  child: Text(
+                    "Request withdrawal money ",
+                    style: TextStyle(color: sevensgbg, fontWeight: FontWeight.w600, fontSize: 12),
+                  ),
+                ),
               ),
             ),
           ),
+
 
           SizedBox(height: 25,),
 
@@ -183,6 +199,7 @@ class _withdrawalState extends State<withdrawal> {
 
                       items:items.map((String items) {
                         return DropdownMenuItem(
+
                             value: items,
                             child: Text(items,style: TextStyle(color: bg1,fontSize: 10),)
                         );
@@ -211,7 +228,7 @@ class _withdrawalState extends State<withdrawal> {
               children: [
                 Text("Recent Transaction",
                   style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 14),),
-                Text("View all",style: TextStyle(color: yellow,fontWeight: FontWeight.w400,fontSize: 12)),
+                // Text("View all",style: TextStyle(color: yellow,fontWeight: FontWeight.w400,fontSize: 12)),
               ],
             ),
           ),

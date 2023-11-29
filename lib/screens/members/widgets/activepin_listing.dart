@@ -84,7 +84,7 @@ class _activepinlistingState extends State<activepinlisting> {
                             Text(":  ",style: TextStyle(color: bg1),),
 
 
-                            Text(activatedpinlists['activatedPins'][0]['name'],style: TextStyle(color: bg1,fontSize: 12),),
+                            Text(activatedpinlists['activatedPins'][index]['name'],style: TextStyle(color: bg1,fontSize: 12),),
                             Expanded(child: SizedBox()),
 
                           ],
@@ -99,7 +99,7 @@ class _activepinlistingState extends State<activepinlisting> {
                             Text(":  ",style: TextStyle(color: bg1),),
 
 
-                            Text(activatedpinlists['activatedPins'][0]['email'],style: TextStyle(color: bg1,fontSize: 12),),
+                            Text(activatedpinlists['activatedPins'][index]['email'],style: TextStyle(color: bg1,fontSize: 12),),
                           ],
                         ),
                         Row(
@@ -112,7 +112,7 @@ class _activepinlistingState extends State<activepinlisting> {
                             Text(":  ",style: TextStyle(color: bg1),),
 
 
-                            Text(activatedpinlists['activatedPins'][0]['phone'].toString(),style: TextStyle(color: bg1,fontSize: 12),),
+                            Text(activatedpinlists['activatedPins'][index]['phone'].toString(),style: TextStyle(color: bg1,fontSize: 12),),
                           ],
                         ),
                         Row(
@@ -124,7 +124,7 @@ class _activepinlistingState extends State<activepinlisting> {
 
                             Text(":  ",style: TextStyle(color: bg1),),
 
-                            Text(activatedpinlists['activatedPins'][0]['profession'],style: TextStyle(color: bg1,fontSize: 12),),
+                            Text(activatedpinlists['activatedPins'][index]['profession'],style: TextStyle(color: bg1,fontSize: 12),),
                           ],
                         ),
                         Row(
@@ -137,7 +137,7 @@ class _activepinlistingState extends State<activepinlisting> {
                             Text(":  ",style: TextStyle(color: bg1),),
 
 
-                            Text(activatedpinlists['activatedPins'][0]['district'],style: TextStyle(color: bg1,fontSize: 12),),
+                            Text(activatedpinlists['activatedPins'][index]['district'],style: TextStyle(color: bg1,fontSize: 12),),
                           ],
                         ),
                         SizedBox(height: 20,)
@@ -156,6 +156,9 @@ class _activepinlistingState extends State<activepinlisting> {
               },
             ),
           ),
+
+
+
         ],
       ),
 

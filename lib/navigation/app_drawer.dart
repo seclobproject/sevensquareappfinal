@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../authentication_page/login.dart';
+import '../commonpage/bankdetails.dart';
 import '../commonpage/profilepage.dart';
+import '../commonpage/salaryaccount.dart';
 import '../commonpage/withdrawal.dart';
 import '../resources/color.dart';
 
@@ -84,40 +86,56 @@ class _appdrawerState extends State<appdrawer> {
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const salarysccount()),
+              );
+            },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/slaryaccount.svg',
-                    fit: BoxFit.cover,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/slaryaccount.svg',
+                      fit: BoxFit.cover,
+                    ),
 
-                  SizedBox(width: 25,),
+                    SizedBox(width: 25,),
 
-                  Text('Salary Account ',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
-                ],
+                    Text('Salary Account ',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
+                  ],
+                ),
               ),
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const bankaccount()),
+              );
+            },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/bank.svg',
-                    fit: BoxFit.cover,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/bank.svg',
+                      fit: BoxFit.cover,
+                    ),
 
-                  SizedBox(width: 25,),
+                    SizedBox(width: 25,),
 
-                  Text('Bank Details',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
-                ],
+                    Text('Bank Details',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: bg1),)
+                  ],
+                ),
               ),
             ),
           ),

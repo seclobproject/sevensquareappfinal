@@ -17,6 +17,7 @@ class _addmembersState extends State<addmembers> {
   var userid;
   var packages;
   var packagedropdownvalue;
+  bool hidePassword = true;
 
   List package = [];
 
@@ -25,6 +26,7 @@ class _addmembersState extends State<addmembers> {
   String? phone;
   String? address;
   String? password;
+
 
 
   Future createleave() async {
@@ -50,7 +52,6 @@ class _addmembersState extends State<addmembers> {
     );
 
   }
-
 
 
   Future _getpackages() async {
@@ -264,7 +265,7 @@ class _addmembersState extends State<addmembers> {
                         height: 40,
                         decoration: BoxDecoration(
                          border: Border.all(color:bg1 ),
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Center(
                           child: Padding(
@@ -315,27 +316,39 @@ class _addmembersState extends State<addmembers> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
-                          onChanged: (text) {
-                            setState(() {
-                              password=text;
-                            });
-                          },
                           autocorrect: true,
                           style: TextStyle(color: Colors.white),
+                          obscureText: hidePassword, //show/hide password
                           decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(10.0)),
                               borderSide: BorderSide(color: bg1, width: 1),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
+                              borderSide: BorderSide(color: bg1),
                             ),
-                          ),),
+                            hintText: 'Password',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: hidePassword
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                            ),
+                          ),
+
+                          onChanged: (text) {
+                            setState(() {
+                              password = text;
+                            });
+                          },
+                        ),
+
                       ),
                     ),
 

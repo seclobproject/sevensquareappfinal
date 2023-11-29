@@ -1,87 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:sevensquare/resources/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/userpin_service.dart';
+import '../support/logger.dart';
 
+class testing extends StatefulWidget {
+  const testing({super.key});
 
-class DiscountCalculator extends StatefulWidget {
   @override
-  _DiscountCalculatorState createState() => _DiscountCalculatorState();
+  State<testing> createState() => _testState();
 }
 
-class _DiscountCalculatorState extends State<DiscountCalculator> {
-  TextEditingController amountController = TextEditingController();
-  TextEditingController discountedPriceController = TextEditingController();
+class _testState extends State<testing> {
+
+  var userid;
+  var activatedpinlists;
+
+  Future _Activatedpin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await UserpinService.activatedpinlisting();
+    log.i('user pin listing done. $response');
+    setState(() {
+      activatedpinlists = response;
+
+    });
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      _Activatedpin();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: sevensgbg,
+    return  Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
-          Container(
-            height: 40,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                controller: amountController,
-                autocorrect: true,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                onChanged: (value) {
-                  updateDiscountedPrice();
-                },
-                decoration: InputDecoration(
-                  hintText: 'Enter your Amount',
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.blue, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            height: 40,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                controller: discountedPriceController,
-                autocorrect: true,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Discounted Price',
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.blue, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: activatedpinlists['activatedPins'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                      leading: const Icon(Icons.list),
+                      trailing: const Text(
+                        "GFG",
+                        style: TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text(activatedpinlists['activatedPins'][index]['name']));
+                }),
           ),
         ],
       ),
     );
   }
-
-  void updateDiscountedPrice() {
-    if (amountController.text.isNotEmpty) {
-      double amount = double.parse(amountController.text);
-      double discountedPrice = amount - (0.10 * amount); // 10% discount
-      discountedPriceController.text = discountedPrice.toStringAsFixed(2);
-    } else {
-      discountedPriceController.text = '';
-    }
-  }
 }
+
+

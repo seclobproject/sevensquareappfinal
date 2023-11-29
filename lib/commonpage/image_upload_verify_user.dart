@@ -18,9 +18,9 @@ class test extends StatefulWidget {
 }
 
 class _testState extends State<test> {
-  final String apiUrl = "http://sevensquaregroup.in/api/users/verify-user";
+  // final String apiUrl = "http://sevensquaregroup.in/api/users/verify-user";
   String? imageUrl;
-  final String referenceNo = "777";
+  // final String referenceNo = "777";
   var userid;
   String? refrence;
 

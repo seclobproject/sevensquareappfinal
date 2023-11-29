@@ -64,9 +64,12 @@ class _packageState extends State<package> {
         backgroundColor: sevensgbg,
         title: Text("Package",style: TextStyle(color: bg1,fontSize: 18),),
       ),
-      body:  _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
+      body:_isLoading
+          ? Center(
+        child: SvgPicture.asset(
+          'assets/svg/opsmsg.svg',
+          height: 250,
+        ),
       )
           :  Column(
         children: [
@@ -176,13 +179,12 @@ class _packageState extends State<package> {
                   );
                 }),
           ):
-          package['userStatus'] == "approved" ?
-          Text(
-            "User status is accepted",
-            style: TextStyle(
-              color: Colors.green, // Set the desired color for accepted status text
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          package['userStatus'] == "pending" ?
+
+          Center(
+            child:  SvgPicture.asset(
+              'assets/svg/opsmsg.svg',
+              height: 250,
             ),
           ) :
           Padding(

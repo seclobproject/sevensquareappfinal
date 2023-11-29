@@ -70,28 +70,46 @@ class _memberspageState extends State<memberspage> {
       ),
 
       body:  _isLoading
-          ?  Center(
+          ? Center(
         child: SvgPicture.asset(
           'assets/svg/opsmsg.svg',
-          height: 300,
+          height: 250,
         ),
       )
-          : Column(
+          :Column(
         children: [
+          memberslisting['userStatus']== "approved" ?
           Expanded(
             child: ListView.builder(
-            itemCount: memberslisting['children'].length,
+            itemCount: memberslisting['result'].length,
             itemBuilder: (BuildContext context, int index) {
               return  membersLiting(
-                id: memberslisting['children'][index]['_id'],
-                name: memberslisting['children'][index]['name'],
-                sponser: memberslisting['children'][index]['sponser'],
-                phone: memberslisting['children'][index]['phone'].toString(),
-                status: memberslisting['children'][index]['userStatus'],
+                id: memberslisting['result'][index]['_id'],
+                name: memberslisting['result'][index]['name'],
+                sponser: memberslisting['result'][index]['sponserID'],
+                phone: memberslisting['result'][index]['phone'].toString(),
+                status: memberslisting['result'][index]['userStatus'],
                 // package: memberslisting['children'][index]['packageChosen'],
 
               );
             }),
+          ):
+          memberslisting['userStatus'] == "pending" ?
+
+          Center(
+            child: Image.asset(
+              'assets/logo/nouserfinal.png',
+              height: 300,
+            ),
+          ) :
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 150),
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/svg/opsmsg.svg',
+                height: 100,
+              ),
+            ),
           ),
 
         ],
@@ -174,14 +192,17 @@ class membersLiting extends StatelessWidget {
 
                       SizedBox(width: 50,),
 
-                      Container(
-                        height: 18,
-                        width: 75,
-                        decoration: BoxDecoration(
-                          color: yellow,
-                          borderRadius: BorderRadius.circular(5)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Container(
+                          height: 18,
+                          width: 65,
+                          decoration: BoxDecoration(
+                            color: yellow,
+                            borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: Center(child: Text("Users List",style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600),)),
                         ),
-                        child: Center(child: Text("Users List",style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600),)),
                       ),
 
                     ],
@@ -201,12 +222,18 @@ class membersLiting extends StatelessWidget {
                       SizedBox(width: 5,),
                       Container(
                           width: 52,
-                          child: Text("₹10000",style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),)),
+                          child: Text(sponser,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: bg1,fontWeight: FontWeight.w600,
+                              fontSize: 11),
+
+                          )),
                       SizedBox(width: 50,),
 
                       Container(
                         height: 18,
-                        width: 75,
+                        width: 65,
                         decoration: BoxDecoration(
                             border: Border.all(color: yellow),
                             borderRadius: BorderRadius.circular(5)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../resources/color.dart';
 import '../../../services/members_service.dart';
@@ -61,11 +62,25 @@ class _membersinnerState extends State<membersinner> {
 
       ),
 
-      body: _isLoading
+      body:_isLoading
           ? const Center(
         child: CircularProgressIndicator(),
       )
-          :Column(
+          : bannerinnerpage['members'].isEmpty
+          ?  Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : Column(
         children: [
           Expanded(
             child: ListView.builder(
@@ -134,7 +149,13 @@ class _membersinnerState extends State<membersinner> {
                                     SizedBox(width: 5,),
                                     Container(
                                         width: 52,
-                                        child: Text(bannerinnerpage['members'][index]['ownSponserId'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),)),
+                                        child: Text(bannerinnerpage['members'][index]['ownSponserId'],
+                                          style: TextStyle(color: bg1,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 11),
+                                          overflow: TextOverflow.ellipsis, // Add this line
+                                          maxLines: 1,
+                                        )),
                                     SizedBox(width: 50,),
 
                                     // Container(
@@ -216,3 +237,5 @@ class _membersinnerState extends State<membersinner> {
     );
   }
 }
+
+

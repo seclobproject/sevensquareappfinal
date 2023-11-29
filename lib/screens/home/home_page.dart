@@ -28,6 +28,8 @@ class _homeState extends State<home> {
   var profilepageapi;
 
   var userid;
+  List<int> unrealisedEarning = [];
+  double totalUnrealisedAmount = 0.0;
 
 
   Future profilepage() async {
@@ -39,6 +41,8 @@ class _homeState extends State<home> {
 
     setState(() {
       profilepageapi = response;
+      unrealisedEarning = (profilepageapi['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
+      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
     });
   }
 
@@ -72,10 +76,13 @@ class _homeState extends State<home> {
       drawer: appdrawer(),
 
       body: _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
+          ?  Center(
+        child: SvgPicture.asset(
+          'assets/svg/opsmsg.svg',
+          height: 300,
+        ),
       )
-          : SingleChildScrollView(
+          :  SingleChildScrollView(
         child: Column(
           children: [
 
@@ -105,7 +112,7 @@ class _homeState extends State<home> {
                         onTap: () {
                           // Navigator.push(
                           //   context,
-                          //   MaterialPageRoute(builder: (context) =>  DiscountCalculator()),
+                          //   MaterialPageRoute(builder: (context) =>  testing()),
                           // );
                         },
                         child: Center(
@@ -193,10 +200,10 @@ class _homeState extends State<home> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("₹1000",style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
+                              Text(profilepageapi['earning'].toString(),style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
                               Align(
 
-                                  child: Text("₹500",style: TextStyle(color: greenbg,fontSize: 18,fontWeight: FontWeight.w700,),)),
+                                  child: Text("₹${totalUnrealisedAmount.toStringAsFixed(2)}",style: TextStyle(color: greenbg,fontSize: 18,fontWeight: FontWeight.w700,),)),
                             ],
                           )),
 
@@ -289,12 +296,12 @@ class _homeState extends State<home> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
                               "Verfied your profile",
                               style: TextStyle(
                                 color: greenbg,
@@ -302,22 +309,21 @@ class _homeState extends State<home> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
+                          ),
 
-                            Container(
-                              height: 50,
-                              width: 50,
-                              child: Image.asset('assets/logo/verified.png'),
-                            ),
-                          ],
-                        ),
+
+                          Container(
+                            height: 60,
+                            width: 60,
+                            child: Image.asset('assets/logo/verification.png'),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
             ), // You can return an empty Container or handle other cases
-
-
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

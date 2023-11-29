@@ -60,11 +60,13 @@ class _walletState extends State<wallet> {
           ? Center(
         child: SvgPicture.asset(
           'assets/svg/opsmsg.svg',
-          height: 300,
+          height: 250,
         ),
       )
-          : Column(
+          :Column(
+
         children: [
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
@@ -127,7 +129,7 @@ class _walletState extends State<wallet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Recent Transaction", style: TextStyle(color: bg1, fontWeight: FontWeight.w700)),
-                Text("View all", style: TextStyle(color: yellow, fontWeight: FontWeight.w400)),
+                // Text("View all", style: TextStyle(color: yellow, fontWeight: FontWeight.w400)),
               ],
             ),
           ),
@@ -204,3 +206,5 @@ class _walletState extends State<wallet> {
     );
   }
 }
+
+

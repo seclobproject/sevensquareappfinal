@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sevensquare/resources/color.dart';
+import 'package:sevensquare/screens/wallet/wallet_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../navigation/bottom_tabs_screen.dart';
+import '../services/password_service.dart';
+import '../support/logger.dart';
 
 class forgottpassword extends StatefulWidget {
   const forgottpassword({super.key});
@@ -9,6 +15,72 @@ class forgottpassword extends StatefulWidget {
 }
 
 class _forgottpasswordState extends State<forgottpassword> {
+
+
+  String? password;
+  var userid;
+  bool hidePassword = true;
+
+
+  Future changepassword() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var reqData = {
+      "password": password,
+    };
+    print(reqData);
+
+    try {
+      var response = await PasswordService.changepassword(reqData);
+
+      if (response['sts'] == '01') {
+        // Show a success message using SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response['msg'] ?? 'Password changed successfully'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BottomTabsScreen()),
+        );
+
+        log.i('Password changed successfully. $response');
+      } else {
+        // Show a failure message using SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response['msg'] ?? 'Password change failed'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+
+        log.i('Password change failed. $response');
+      }
+    } catch (error) {
+      // Handle any exceptions that might occur during the API call
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error during password change'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      log.e('Error during password change. $error');
+    }
+
+    // If you want to navigate to another screen after password change, uncomment the following lines
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => wallet()),
+    // );
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -25,25 +97,43 @@ class _forgottpasswordState extends State<forgottpassword> {
           ),
 
           Container(
-            height: 55,
+            height: 50,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 autocorrect: true,
-                style: TextStyle(color: Colors.white), // Set text color to white
+                style: TextStyle(color: Colors.white),
+                obscureText: hidePassword, //show/hide password
                 decoration: InputDecoration(
-                  hintText: 'Enter your New Password',
-                  hintStyle: TextStyle(color: Colors.grey,),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: bg1, width: 1),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: bg1),
                   ),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
+                  ),
                 ),
+
+                onChanged: (text) {
+                  setState(() {
+                    password = text;
+                  });
+                },
               ),
+
             ),
           ),
           SizedBox(height: 10,),
@@ -52,30 +142,47 @@ class _forgottpasswordState extends State<forgottpassword> {
             padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             child: Align(
                 alignment: Alignment.topLeft,
-                child: Text("Conform password ",style: TextStyle(color: bg1),)),
+                child: Text("Confirm Password ",style: TextStyle(color: bg1),)),
           ),
 
           Container(
-            height: 55,
+            height: 50,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 autocorrect: true,
                 style: TextStyle(color: Colors.white),
+                obscureText: hidePassword, //show/hide password
                 decoration: InputDecoration(
-                  hintText: 'Enter your New Conform Password',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  // filled: true,
-                  // fillColor: Colors.white70,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: bg1, width: 1),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color:  bg1),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(color: bg1),
                   ),
-                ),),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
+                  ),
+                ),
+
+                onChanged: (text) {
+                  setState(() {
+                    password = text;
+                  });
+                },
+              ),
+
             ),
           ),
 
@@ -83,7 +190,7 @@ class _forgottpasswordState extends State<forgottpassword> {
 
           GestureDetector(
             onTap: (){
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageagepage()));
+              changepassword();
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

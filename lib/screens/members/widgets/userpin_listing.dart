@@ -81,29 +81,35 @@ class _userpinlistingState extends State<userpinlisting> {
                     style: TextStyle(fontSize: 14, color: bg1),
                   ),
 
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>  addactivatedpin()),
-                      );
-                    },
-                    child: Container(
-                      height: 18,
-                      width: 75,
-                      decoration: BoxDecoration(
-                          color:yellow, borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Text(
-                          "Activate Pin",
-                          style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
-                        ),
+              IgnorePointer(
+                ignoring: userpinlist['pinsLeft'] == 0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => addactivatedpin()),
+                    );
+                  },
+                  child: Container(
+                    height: 18,
+                    width: 75,
+                    decoration: BoxDecoration(
+                      color: userpinlist['pinsLeft'] == 0 ? Colors.grey : Colors.yellow,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Activate Pin",
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
+                ),
+              ),
 
 
-                ],
+
+              ],
               ),
             ),
             Padding(
@@ -118,28 +124,34 @@ class _userpinlistingState extends State<userpinlisting> {
                       style: TextStyle(fontSize: 10, color: bg1),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>  adduserpin()),
-                      );
-                    },
-                    child: Container(
-                      height: 18,
-                      width: 75,
-                      decoration: BoxDecoration(
-                          color: yellow,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Text(
-                          'Add user',
-                          style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: bottomtacolor),
-                        ),
+              IgnorePointer(
+                ignoring: userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff',
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => adduserpin()),
+                    );
+                  },
+                  child: Container(
+                    height: 18,
+                    width: 75,
+                    decoration: BoxDecoration(
+                      color: (userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff') ? Colors.grey : Colors.yellow,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add user',
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: bottomtacolor),
                       ),
                     ),
                   ),
-                ],
+                ),
+              ),
+
+
+              ],
               ),
             ),
             Padding(
@@ -152,7 +164,7 @@ class _userpinlistingState extends State<userpinlisting> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    userpinlist['pinCount'].toString(),
+                    userpinlist['pinsLeft'].toString(),
                     style: TextStyle(fontSize: 16, color: greenbg),
                   ),
                 ],
