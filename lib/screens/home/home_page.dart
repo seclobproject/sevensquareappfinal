@@ -28,9 +28,8 @@ class _homeState extends State<home> {
   var profilepageapi;
 
   var userid;
-  List<int> unrealisedEarning = [];
+  List<dynamic> unrealisedEarning = [];
   double totalUnrealisedAmount = 0.0;
-
 
   Future profilepage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,11 +38,31 @@ class _homeState extends State<home> {
     var response = await HomeService.GetProfile();
     log.i('Profile page. $response');
 
+    // setState(() {
+    //   profilepageapi = response;
+    //   unrealisedEarning = (profilepageapi['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
+    //   totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
+    // });
+
+
     setState(() {
       profilepageapi = response;
-      unrealisedEarning = (profilepageapi['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
-      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
+
+      if (profilepageapi['unrealisedEarning'] is List) {
+        unrealisedEarning = List<dynamic>.from(profilepageapi['unrealisedEarning']);
+      }
+
+      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) {
+        if (amount is int) {
+          return sum + amount.toDouble();
+        } else if (amount is double) {
+          return sum + amount;
+        }
+        return sum;
+      });
     });
+
+
   }
 
 
@@ -112,7 +131,7 @@ class _homeState extends State<home> {
                         onTap: () {
                           // Navigator.push(
                           //   context,
-                          //   MaterialPageRoute(builder: (context) =>  testing()),
+                          //   MaterialPageRoute(builder: (context) =>  MyHomePage()),
                           // );
                         },
                         child: Center(
@@ -338,3 +357,5 @@ class _homeState extends State<home> {
     );
   }
 }
+
+

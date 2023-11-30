@@ -18,7 +18,8 @@ class _walletState extends State<wallet> {
   var userid;
   var walletlist;
   bool _isLoading = true;
-  List<int> unrealisedEarning = [];
+  // List<int> unrealisedEarning = [];
+  List<dynamic> unrealisedEarning = [];
   double totalUnrealisedAmount = 0.0;
 
   Future _getwallet() async {
@@ -28,11 +29,30 @@ class _walletState extends State<wallet> {
     log.i('Wallet list.. $response');
     print(walletlist);
 
+    // setState(() {
+    //   walletlist = response;
+    //   unrealisedEarning = (walletlist['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
+    //   totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
+    // });
+
     setState(() {
       walletlist = response;
-      unrealisedEarning = (walletlist['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
-      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
+
+      if (walletlist['unrealisedEarning'] is List) {
+        unrealisedEarning = List<dynamic>.from(walletlist['unrealisedEarning']);
+      }
+
+      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) {
+        if (amount is int) {
+          return sum + amount.toDouble();
+        } else if (amount is double) {
+          return sum + amount;
+        }
+        return sum;
+      });
     });
+
+
   }
 
   Future _initLoad() async {

@@ -89,7 +89,10 @@ class _memberspageState extends State<memberspage> {
                 sponser: memberslisting['result'][index]['sponserID'],
                 phone: memberslisting['result'][index]['phone'].toString(),
                 status: memberslisting['result'][index]['userStatus'],
-                // package: memberslisting['children'][index]['packageChosen'],
+                packageamount: memberslisting['result'][index]['packageAmount'].toString(),
+                email: memberslisting['result'][index]['email'],
+                address: memberslisting['result'][index]['address'],
+
 
               );
             }),
@@ -140,6 +143,9 @@ class membersLiting extends StatelessWidget {
     required this.status,
     // required this.package,
     required this.id,
+    required this.email,
+    required this.packageamount,
+    required this.address,
     super.key,
 
   });
@@ -150,6 +156,9 @@ class membersLiting extends StatelessWidget {
   final String status;
   // final String package;
   final String id;
+  final String email;
+  final String packageamount;
+  final String address;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +176,7 @@ class membersLiting extends StatelessWidget {
           padding:  EdgeInsets.all(8.0),
           child: Container(
             width: 444,
-            height: 125,
+            // height: 125,
             // margin: EdgeInsets.all(10),
             child: Column(
               children: [
@@ -272,18 +281,58 @@ class membersLiting extends StatelessWidget {
                       SizedBox(width: 65,),
                       Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                       SizedBox(width: 5,),
-                      Text("₹10000",style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                      Text(email,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
 
                       SizedBox(width: 28,),
-                      Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 10),
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text("November 09 10:30 PM",style: TextStyle(fontSize: 7,color: textgrey1),)),
-                      )
+
                     ],
                   ),
                 ),
+
+                SizedBox(height: 5,),
+
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+
+                    children: [
+                      Text("Package ",style: TextStyle(fontSize: 10,color: bg1,),),
+                      SizedBox(width: 65,),
+                      Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                      SizedBox(width: 5,),
+                      Text(packageamount,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+
+                      SizedBox(width: 28,),
+
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 5,),
+
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+
+                    children: [
+                      Text("Package ",style: TextStyle(fontSize: 10,color: bg1,),),
+                      SizedBox(width: 65,),
+                      Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                      SizedBox(width: 5,),
+                      Text(address,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+
+                      SizedBox(width: 28,),
+                      // Padding(
+                      //   padding:  EdgeInsets.symmetric(horizontal: 10),
+                      //   child: Align(
+                      //       alignment: Alignment.bottomRight,
+                      //       child: Text("November 09 10:30 PM",style: TextStyle(fontSize: 7,color: textgrey1),)),
+                      // )
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 20,),
 
 
               ],
@@ -302,3 +351,6 @@ class membersLiting extends StatelessWidget {
     );
   }
 }
+
+
+

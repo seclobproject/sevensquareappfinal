@@ -67,7 +67,7 @@ class _userpinlistingState extends State<userpinlisting> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Container(
         width: 444,
-        height: 125,
+
         child: Column(
           children: [
             SizedBox(height: 20),
@@ -81,31 +81,7 @@ class _userpinlistingState extends State<userpinlisting> {
                     style: TextStyle(fontSize: 14, color: bg1),
                   ),
 
-              IgnorePointer(
-                ignoring: userpinlist['pinsLeft'] == 0,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => addactivatedpin()),
-                    );
-                  },
-                  child: Container(
-                    height: 18,
-                    width: 75,
-                    decoration: BoxDecoration(
-                      color: userpinlist['pinsLeft'] == 0 ? Colors.grey : Colors.yellow,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Activate Pin",
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
 
 
 
@@ -124,53 +100,93 @@ class _userpinlistingState extends State<userpinlisting> {
                       style: TextStyle(fontSize: 10, color: bg1),
                     ),
                   ),
-              IgnorePointer(
-                ignoring: userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff',
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => adduserpin()),
-                    );
-                  },
-                  child: Container(
-                    height: 18,
-                    width: 75,
-                    decoration: BoxDecoration(
-                      color: (userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff') ? Colors.grey : Colors.yellow,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Add user',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: bottomtacolor),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Counts :",
+                          style: TextStyle(fontSize: 14, color: bg1, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 2),
+                        Text(
+                          userpinlist['pinsLeft'].toString(),
+                          style: TextStyle(fontSize: 16, color: greenbg),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
 
 
               ],
               ),
             ),
+
+            SizedBox(height: 5),
+
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Counts :",
-                    style: TextStyle(fontSize: 14, color: bg1, fontWeight: FontWeight.w600),
+                  IgnorePointer(
+                    ignoring: userpinlist['pinsLeft'] == 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => addactivatedpin()),
+                        );
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          color: userpinlist['pinsLeft'] == 0 ? Colors.grey : Colors.yellow,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Activate Pin",
+                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    userpinlist['pinsLeft'].toString(),
-                    style: TextStyle(fontSize: 16, color: greenbg),
+
+
+
+                  IgnorePointer(
+                    ignoring: userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => adduserpin()),
+                        );
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          color: (userpinlist['pinsLeft'] == 0 || userpinlist['packageType'] == 'staff') ? Colors.grey : Colors.yellow,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Add user',
+                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: bottomtacolor),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 5),
+
+            SizedBox(height: 20),
           ],
         ),
         decoration: BoxDecoration(

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/packageService.dart';
 import '../../services/wallet_service.dart';
 import '../../support/logger.dart';
+import '../services/salary_service.dart';
 
 class salarysccount extends StatefulWidget {
   const salarysccount({super.key});
@@ -16,22 +17,18 @@ class salarysccount extends StatefulWidget {
 
 class _walletState extends State<salarysccount> {
   var userid;
-  var walletlist;
+  var salarylist;
   bool _isLoading = true;
-  List<int> unrealisedEarning = [];
-  double totalUnrealisedAmount = 0.0;
 
   Future _getwallet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userid = prefs.getString('userid');
-    var response = await WalletService.wallets();
-    log.i('Wallet list.. $response');
-    print(walletlist);
+    var response = await SalaryService.salary();
+    log.i('Salary list.. $response');
+    print(salarylist);
 
     setState(() {
-      walletlist = response;
-      unrealisedEarning = (walletlist['unrealisedEarning'] as List<dynamic>).map((e) => e as int).toList();
-      totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) => sum + amount).toDouble();
+      salarylist = response;
     });
   }
 
@@ -53,7 +50,12 @@ class _walletState extends State<salarysccount> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: sevensgbg,
-        title: Text("Wallet", style: TextStyle(color: bg1, fontSize: 18)),
+        iconTheme: IconThemeData(
+          color:bg1, //change your color here
+        ),
+        centerTitle: true,
+        title: Text("Salary Account",style: TextStyle(color: bg1,fontSize: 16),),
+
       ),
       backgroundColor: sevensgbg,
       body: _isLoading
@@ -90,7 +92,7 @@ class _walletState extends State<salarysccount> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Total Wallet Amount", style: TextStyle(color: bg1)),
-                            Text("Unrealized Amount", style: TextStyle(color: greenbg, fontSize: 10)),
+                            Text("Unrealized salary", style: TextStyle(color: greenbg, fontSize: 10)),
                           ],
                         )),
                     Align(
@@ -98,10 +100,10 @@ class _walletState extends State<salarysccount> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(walletlist['earning'].toString(),
+                            Text(salarylist['earning'].toString(),
                                 style: TextStyle(color: bg1, fontSize: 18, fontWeight: FontWeight.w700)),
                             Align(
-                              child: Text("₹${totalUnrealisedAmount.toStringAsFixed(2)}",
+                              child: Text(salarylist['unrealisedSalary'].toString(),
                                   style: TextStyle(color: greenbg, fontSize: 18, fontWeight: FontWeight.w700)),
                             ),
                           ],
@@ -123,84 +125,84 @@ class _walletState extends State<salarysccount> {
           SizedBox(
             height: 25,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Recent Transaction", style: TextStyle(color: bg1, fontWeight: FontWeight.w700)),
-                // Text("View all", style: TextStyle(color: yellow, fontWeight: FontWeight.w400)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Divider(thickness: 0.1, color: bg1),
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: walletlist['transactionHistory'].length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  color: yellow, borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child: Image.asset(
-                                "assets/logo/trnss.png",
-                                height: 20,
-                                width: 20,
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(walletlist['transactionHistory'][0]['referenceID'],
-                                    style: TextStyle(color: bg1, fontSize: 10)),
-                                Text("Name", style: TextStyle(color: bg1, fontSize: 10)),
-                              ],
-                            ),
-                            Expanded(child: SizedBox()),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text('\$${walletlist['transactionHistory'][0]['amount'].toString()}',
-                                  style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("26 October 2023 10:30 PM", style: TextStyle(fontSize: 8, color: bg1)),
-                            Container(
-                              height: 20,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                  color: yellow,
-                                  borderRadius: BorderRadius.all(Radius.circular(5))),
-                              child: Center(
-                                  child: Text(walletlist['transactionHistory'][0]['status'],
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ))),
-                            )
-                          ],
-                        ),
-                        Divider(thickness: 0.1, color: bg1),
-                      ],
-                    ),
-                  );
-                }),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 20),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text("Recent Transaction", style: TextStyle(color: bg1, fontWeight: FontWeight.w700)),
+          //       // Text("View all", style: TextStyle(color: yellow, fontWeight: FontWeight.w400)),
+          //     ],
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: Divider(thickness: 0.1, color: bg1),
+          // ),
+          // Expanded(
+          //   child: ListView.builder(
+          //       itemCount: walletlist['transactionHistory'].length,
+          //       itemBuilder: (BuildContext context, int index) {
+          //         return Padding(
+          //           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          //           child: Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               Row(
+          //                 children: [
+          //                   Container(
+          //                     height: 30,
+          //                     width: 30,
+          //                     decoration: BoxDecoration(
+          //                         color: yellow, borderRadius: BorderRadius.all(Radius.circular(10))),
+          //                     child: Image.asset(
+          //                       "assets/logo/trnss.png",
+          //                       height: 20,
+          //                       width: 20,
+          //                     ),
+          //                   ),
+          //                   SizedBox(width: 10,),
+          //                   Column(
+          //                     crossAxisAlignment: CrossAxisAlignment.start,
+          //                     children: [
+          //                       Text(walletlist['transactionHistory'][0]['referenceID'],
+          //                           style: TextStyle(color: bg1, fontSize: 10)),
+          //                       Text("Name", style: TextStyle(color: bg1, fontSize: 10)),
+          //                     ],
+          //                   ),
+          //                   Expanded(child: SizedBox()),
+          //                   Padding(
+          //                     padding: const EdgeInsets.symmetric(horizontal: 20),
+          //                     child: Text('\$${walletlist['transactionHistory'][0]['amount'].toString()}',
+          //                         style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
+          //                   ),
+          //                 ],
+          //               ),
+          //               SizedBox(height: 10,),
+          //               Row(
+          //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                 children: [
+          //                   Text("26 October 2023 10:30 PM", style: TextStyle(fontSize: 8, color: bg1)),
+          //                   Container(
+          //                     height: 20,
+          //                     width: 60,
+          //                     decoration: BoxDecoration(
+          //                         color: yellow,
+          //                         borderRadius: BorderRadius.all(Radius.circular(5))),
+          //                     child: Center(
+          //                         child: Text(walletlist['transactionHistory'][0]['status'],
+          //                             style: TextStyle(
+          //                               fontSize: 10,
+          //                             ))),
+          //                   )
+          //                 ],
+          //               ),
+          //               Divider(thickness: 0.1, color: bg1),
+          //             ],
+          //           ),
+          //         );
+          //       }),
+          // ),
         ],
       ),
     );

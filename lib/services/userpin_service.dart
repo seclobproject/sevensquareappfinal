@@ -33,4 +33,17 @@ class UserpinService {
     }
   }
 
+
+  static Future adduserpin(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/franchise/register',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../navigation/bottom_tabs_screen.dart';
 import '../../../resources/color.dart';
+import '../../../services/members_service.dart';
+import '../../../services/userpin_service.dart';
+import '../../../support/logger.dart';
 
 class adduserpin extends StatefulWidget {
   const adduserpin({super.key});
@@ -10,6 +14,68 @@ class adduserpin extends StatefulWidget {
 }
 
 class _adduserpinState extends State<adduserpin> {
+
+
+  var userid;
+  var packages;
+  var packagedropdownvalue;
+  bool hidePassword = true;
+
+  List package = [];
+
+  String? name;
+  String? email;
+  String? phone;
+  String? address;
+  String? password;
+
+
+
+  Future addmember() async {
+    setState(() {
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var reqData = {
+      'name': name,
+      'email': email,
+      'phone':phone,
+      'address':address,
+      "password":password,
+      "packageSelected":packagedropdownvalue['id'],
+    };
+    print(reqData);
+    var response = await UserpinService.adduserpin(reqData);
+    log.i('leave create . $response');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BottomTabsScreen()),
+    );
+
+  }
+
+
+  Future _getpackages() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await MembersService.membersPackages();
+    log.i('Package list.. $response');
+    setState(() {
+      package = response['results'];
+    });
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getpackages();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -61,7 +127,7 @@ class _adduserpinState extends State<adduserpin> {
                               color: Colors.white),
                           onChanged: (text) {
                             setState(() {
-                              // name=text;
+                              name=text;
                             });
                           },
                           decoration: InputDecoration(
@@ -96,7 +162,7 @@ class _adduserpinState extends State<adduserpin> {
                           autocorrect: true,
                           onChanged: (text) {
                             setState(() {
-                              // email=text;
+                              email=text;
                             });
                           },
                           style: TextStyle(color: Colors.white),
@@ -132,7 +198,7 @@ class _adduserpinState extends State<adduserpin> {
                           autocorrect: true,
                           onChanged: (text) {
                             setState(() {
-                              // phone=text;
+                              phone=text;
                             });
                           },
                           style: TextStyle(
@@ -168,7 +234,7 @@ class _adduserpinState extends State<adduserpin> {
                         child: TextField(
                           onChanged: (text) {
                             setState(() {
-                              // address=text;
+                              address=text;
                             });
                           },
                           autocorrect: true,
@@ -197,6 +263,51 @@ class _adduserpinState extends State<adduserpin> {
                           child: Text("Choose Package ",style: TextStyle(color: bg1),)),
                     ),
 
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(color:bg1 ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 35),
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Select Package',
+                                  hintStyle: TextStyle(fontSize: 12,color: bg1)// Remove underline
+                              ),
+                              isExpanded: true,
+                              dropdownColor: sevensgbg,
+                              icon: Icon(Icons.arrow_drop_down, color: bg1),
+                              iconSize: 20,
+                              elevation: 10,
+                              style: TextStyle(color: bg1, fontSize: 15),
+                              items: package.map((item) {
+                                print(item);
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(
+                                    item['amount'].toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                setState(() {
+                                  packagedropdownvalue = newVal;
+                                });
+                              },
+                              value: packagedropdownvalue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
 
 
                     Padding(
@@ -213,7 +324,7 @@ class _adduserpinState extends State<adduserpin> {
                         child: TextField(
                           onChanged: (text) {
                             setState(() {
-                              // password=text;
+                              password=text;
                             });
                           },
                           autocorrect: true,
@@ -240,7 +351,7 @@ class _adduserpinState extends State<adduserpin> {
 
                     InkWell(
                       onTap: (){
-                        // createleave();
+                        addmember();
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../navigation/bottom_tabs_screen.dart';
 import '../resources/color.dart';
 import '../services/bank_service.dart';
 import 'package:dio/dio.dart';
@@ -48,16 +49,23 @@ class _bankaccountState extends State<bankaccount> {
         'pan': pan,
       });
 
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomTabsScreen()),
+      );
+
       var response = await BankService.addbankdetails(formData);
 
       if (response.statusCode == 200) {
         print("Images uploaded successfully");
         print(response.data);
       } else {
+        print('hello');
         print(response.statusCode);
         print(response.data);
       }
     } catch (e) {
+      print('kk');
       print("Exception during image upload: $e");
     }
   }
