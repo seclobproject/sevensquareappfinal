@@ -148,7 +148,7 @@ class _profilepageState extends State<profilepage> {
                   
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Teams & Condition",style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 13),),
+                    child: Text("Terms & Conditions",style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 13),),
                   ),
                   SizedBox(height: 10,),
 

@@ -18,6 +18,46 @@ class userpin extends StatefulWidget {
 
 class _userpinState extends State<userpin> {
 
+
+  var userpinlist;
+  var activatedpinlist;
+  bool _isLoading = true;
+  var userid;
+
+
+  Future userpin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await UserpinService.userpinlisting();
+    log.i('user pin listing done. $response');
+    setState(() {
+      userpinlist = response.data;
+    });
+  }
+
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        userpin(),
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      _initLoad();
+    });
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
@@ -54,12 +94,51 @@ class _userpinState extends State<userpin> {
             ],
           ),
         ),
-        body:  TabBarView(
+        body:  _isLoading
+            ? Center(
+            child:CircularProgressIndicator()
+        )
+            : TabBarView(
           children: [
+            userpinlist['userStatus']== "approved" ?
             // First tab content
-            userpinlisting(),
-            // Second tab content
-            activepinlisting(),
+            userpinlisting():
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 150),
+              child: Center(
+                child:  Column(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/noactivation.svg',
+                      height: 200,
+                    ),
+                    SizedBox(height: 10,),
+
+                    Text("Activation\nPending..!!",
+                      style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+                  ],
+                ),
+              ),
+            ),
+            userpinlist['userStatus']== "approved" ?
+            activepinlisting():
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 150),
+              child: Center(
+                child:  Column(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/noactivation.svg',
+                      height: 200,
+                    ),
+                    SizedBox(height: 10,),
+
+                    Text("Activation\nPending..!!",
+                      style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

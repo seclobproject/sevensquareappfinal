@@ -83,7 +83,55 @@ class _homeState extends State<home> {
     _isLoading = false;
   }
 
-
+  // bool _isLoading = true;
+  // var profilepageapi;
+  //
+  // var userId;
+  // List<dynamic> unrealisedEarning = [];
+  // double totalUnrealisedAmount = 0.0;
+  //
+  // Future<void> profilePage() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   userId = prefs.getString('userid') ?? "";
+  //   print("userId....$userId");
+  //   try {
+  //     var response = await HomeService.GetProfile();
+  //     log.i('Profile page. $response');
+  //
+  //     setState(() {
+  //       profilepageapi = response;
+  //
+  //       if (profilepageapi != null &&
+  //           profilepageapi['unrealisedEarning'] is List) {
+  //         unrealisedEarning =
+  //         List<dynamic>.from(profilepageapi['unrealisedEarning']);
+  //       }
+  //
+  //       totalUnrealisedAmount = unrealisedEarning.fold(0, (sum, amount) {
+  //         if (amount is num) {
+  //           return sum + amount.toDouble();
+  //         }
+  //         return sum;
+  //       });
+  //     });
+  //   } catch (error) {
+  //     // Handle error, e.g., show an error message
+  //     print("Error fetching profile page: $error");
+  //   }
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initLoad();
+  // }
+  //
+  // Future<void> _initLoad() async {
+  //   await Future.wait([profilePage()]);
+  //   setState(() {
+  //     _isLoading = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +144,7 @@ class _homeState extends State<home> {
 
       body: _isLoading
           ?  Center(
-        child: SvgPicture.asset(
-          'assets/svg/opsmsg.svg',
-          height: 300,
-        ),
+        child:CircularProgressIndicator()
       )
           :  SingleChildScrollView(
         child: Column(

@@ -170,7 +170,7 @@ class _bankaccountState extends State<bankaccount> {
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                       child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text("A/c No",style: TextStyle(color: bg1),)),
+                          child: Text("Account Number ",style: TextStyle(color: bg1),)),
                     ),
 
                     Container(
@@ -281,7 +281,7 @@ class _bankaccountState extends State<bankaccount> {
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                       child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text("Adhar Number",style: TextStyle(color: bg1),)),
+                          child: Text("Aadhaar Number",style: TextStyle(color: bg1),)),
                     ),
 
 

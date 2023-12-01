@@ -91,8 +91,8 @@ class _walletState extends State<salarysccount> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Total Wallet Amount", style: TextStyle(color: bg1)),
-                            Text("Unrealized salary", style: TextStyle(color: greenbg, fontSize: 10)),
+                            Text("Unrealized salary", style: TextStyle(color: bg1)),
+                            // Text("Unrealized salary", style: TextStyle(color: greenbg, fontSize: 10)),
                           ],
                         )),
                     Align(
@@ -100,12 +100,12 @@ class _walletState extends State<salarysccount> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(salarylist['earning'].toString(),
-                                style: TextStyle(color: bg1, fontSize: 18, fontWeight: FontWeight.w700)),
-                            Align(
-                              child: Text(salarylist['unrealisedSalary'].toString(),
-                                  style: TextStyle(color: greenbg, fontSize: 18, fontWeight: FontWeight.w700)),
-                            ),
+                            Text(salarylist['unrealisedSalary'].toString(),
+                                style: TextStyle(color: greenbg, fontSize: 18, fontWeight: FontWeight.w700,)),
+                            // Align(
+                            //   child: Text(salarylist['unrealisedSalary'].toString(),
+                            //       style: TextStyle(color: greenbg, fontSize: 18, fontWeight: FontWeight.w700)),
+                            // ),
                           ],
                         )),
                     SizedBox(

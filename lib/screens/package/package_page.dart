@@ -66,10 +66,7 @@ class _packageState extends State<package> {
       ),
       body:_isLoading
           ? Center(
-        child: SvgPicture.asset(
-          'assets/svg/opsmsg.svg',
-          height: 250,
-        ),
+        child:CircularProgressIndicator()
       )
           :  Column(
         children: [
@@ -116,10 +113,10 @@ class _packageState extends State<package> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(package['results'][0]['packageName'],style: TextStyle(fontSize: 10,color: bg1,),),
-                                Text(package['results'][0]['amount'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
-                                Text(package['results'][0]['amountExGST'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
-                                Text(package['results'][0]['schemeType'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                                Text(package['results'][index]['packageName'],style: TextStyle(fontSize: 10,color: bg1,),),
+                                Text(package['results'][index]['amount'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                                Text(package['results'][index]['amountExGST'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                                Text(package['results'][index]['schemeType'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
                               ],
                             ),
                           ),
@@ -181,12 +178,25 @@ class _packageState extends State<package> {
           ):
           package['userStatus'] == "pending" ?
 
-          Center(
-            child:  SvgPicture.asset(
-              'assets/svg/opsmsg.svg',
-              height: 250,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 150),
+            child: Center(
+              child:  Column(
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/noactivation.svg',
+                    height: 200,
+                  ),
+                  SizedBox(height: 10,),
+
+                  Text("Activation\nPending..!!",
+                    style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+                ],
+              ),
             ),
           ) :
+
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 150),
             child: Center(
