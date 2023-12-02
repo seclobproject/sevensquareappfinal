@@ -78,44 +78,43 @@ class _userpinlistingState extends State<userpinlisting> {
                 children: [
                   Text(
                     "Total pins left",
-                    style: TextStyle(fontSize: 14, color: bg1),
+                    style: TextStyle(fontSize: 16, color: bg1),
                   ),
-
-
-
-
 
               ],
               ),
+
             ),
+
+            SizedBox(height: 5,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Versions of the Lorem ipsum text have been\nused in typesetting at least since the 1960s,\n",
+                      "You do not have a pin in your hand,  You should\nspeak with the adminif you want pin.",
                       style: TextStyle(fontSize: 10, color: bg1),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Counts :",
-                          style: TextStyle(fontSize: 14, color: bg1, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(width: 2),
-                        Text(
-                          userpinlist['pinsLeft'].toString(),
-                          style: TextStyle(fontSize: 16, color: greenbg),
-                        ),
-                      ],
-                    ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Text(
+                        "Counts :",
+                        style: TextStyle(fontSize: 14, color: bg1, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        userpinlist['pinsLeft'].toString(),
+                        style: TextStyle(fontSize: 17, color: greenbg),
+                      ),
+                    ],
                   ),
+
+                  SizedBox(height: 10,),
 
 
               ],

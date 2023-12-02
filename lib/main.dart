@@ -21,8 +21,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Landing_Page(
-        title: 'landingpage',),
+      home: MyHomePage(),
     );
   }
 }

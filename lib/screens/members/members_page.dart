@@ -31,8 +31,10 @@ class _memberspageState extends State<memberspage> {
     userid = prefs.getString('userid');
     var response = await MembersService.memberslisting();
     log.i('members listing done. $response');
+    memberslisting = response.data;
     setState(() {
-      memberslisting = response.data;
+
+      print(memberslisting['userStatus']);
     });
   }
 
@@ -62,83 +64,93 @@ class _memberspageState extends State<memberspage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: sevensgbg,
-
       appBar: AppBar(
         backgroundColor: sevensgbg,
-        title: Text("Member",style: TextStyle(color: bg1,fontSize: 18),),
+        title: Text("Member", style: TextStyle(color: bg1, fontSize: 18)),
       ),
-
-      body:_isLoading
-          ? const Center(
+      body: _isLoading
+          ? Center(
         child: CircularProgressIndicator(),
       )
-          :Column(
+          : (memberslisting['userStatus'] == "pending" && memberslisting['result'].isEmpty)
+          ? Center(
+        child: Column(
+          children: [
+            SizedBox(height: 150,),
+            SvgPicture.asset(
+              'assets/svg/noactivation.svg',
+              height: 200,
+            ),
+            SizedBox(height: 10,),
+
+            Text("Activation\nPending..!!",
+              style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : (memberslisting['userStatus'] == "pending")
+          ? Center(
+        child: Text(
+          "User status is pending.",
+          style: TextStyle(color: Colors.red),
+        ),
+      )
+          : (memberslisting['result'].isEmpty)
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : Column(
         children: [
-          memberslisting['userStatus']== "approved" ?
           Expanded(
             child: ListView.builder(
-            itemCount: memberslisting['result'].length,
-            itemBuilder: (BuildContext context, int index) {
-              return  membersLiting(
-                id: memberslisting['result'][index]['_id'],
-                name: memberslisting['result'][index]['name'],
-                sponser: memberslisting['result'][index]['sponserID'],
-                phone: memberslisting['result'][index]['phone'].toString(),
-                status: memberslisting['result'][index]['userStatus'],
-                packageamount: memberslisting['result'][index]['packageAmount'].toString(),
-                email: memberslisting['result'][index]['email'],
-                address: memberslisting['result'][index]['address'],
-
-
-              );
-            }),
-          ):
-          memberslisting['userStatus'] == "pending" ?
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 150),
-            child: Center(
-              child:  Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/noactivation.svg',
-                    height: 200,
-                  ),
-                  SizedBox(height: 10,),
-
-                  Text("Activation\nPending..!!",
-                    style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
-                ],
-              ),
+              itemCount: memberslisting['result'].length,
+              itemBuilder: (BuildContext context, int index) {
+                return membersLiting(
+                  id: memberslisting['result'][index]['_id'],
+                  name: memberslisting['result'][index]['name'],
+                  sponser: memberslisting['result'][index]['sponserId'],
+                  phone: memberslisting['result'][index]['phone'].toString(),
+                  status: memberslisting['result'][index]['userStatus'],
+                  packageamount: memberslisting['result'][index]['packageAmount'].toString(),
+                  email: memberslisting['result'][index]['email'],
+                  address: memberslisting['result'][index]['address'],
+                );
+              },
             ),
-          ) :
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 150),
-            child: Center(
-              child: SvgPicture.asset(
-                'assets/svg/opsmsg.svg',
-                height: 100,
-              ),
-            ),
-          ),
-
+          )
         ],
       ),
 
       floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         child: Icon(Icons.add),
         backgroundColor: yellow,
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>  AddMembers()),
+            MaterialPageRoute(builder: (context) => AddMembers()),
           );
         },
       ),
-
     );
+
+
+
+
+
+
+
+
   }
 }
 
@@ -202,21 +214,16 @@ class membersLiting extends StatelessWidget {
                         width: 52,
 
                         child: Text(name,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),)),
-
-
                     SizedBox(width: 50,),
 
-                    Padding(
-                      padding:  EdgeInsets.only(right: 20),
-                      child: Container(
-                        height: 18,
-                        width: 65,
-                        decoration: BoxDecoration(
-                          color: yellow,
+                    Container(
+                      height: 18,
+                      width: 65,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: yellow),
                           borderRadius: BorderRadius.circular(5)
-                        ),
-                        child: Center(child: Text("Users List",style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600),)),
                       ),
+                      child: Center(child: Text(status,style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600,color: bg1),)),
                     ),
 
                   ],
@@ -235,7 +242,7 @@ class membersLiting extends StatelessWidget {
                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                     SizedBox(width: 5,),
                     Container(
-                        width: 52,
+                        width: 150,
                         child: Text(sponser,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -243,17 +250,6 @@ class membersLiting extends StatelessWidget {
                             fontSize: 11),
 
                         )),
-                    SizedBox(width: 50,),
-
-                    Container(
-                      height: 18,
-                      width: 65,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: yellow),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Center(child: Text(status,style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600,color: bg1),)),
-                    ),
                   ],
                 ),
               ),

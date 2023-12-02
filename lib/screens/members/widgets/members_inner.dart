@@ -97,7 +97,7 @@ class _membersinnerState extends State<membersinner> {
                         padding:  EdgeInsets.all(8.0),
                         child: Container(
                           width: 444,
-                          height: 125,
+                          // height: 125,
                           // margin: EdgeInsets.all(10),
                           child: Column(
                             children: [
@@ -148,7 +148,7 @@ class _membersinnerState extends State<membersinner> {
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                                     SizedBox(width: 5,),
                                     Container(
-                                        width: 52,
+                                        width: 120,
                                         child: Text(bannerinnerpage['members'][index]['ownSponserId'],
                                           style: TextStyle(color: bg1,
                                               fontWeight: FontWeight.w600,
@@ -181,8 +181,29 @@ class _membersinnerState extends State<membersinner> {
                                     SizedBox(width: 35,),
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                                     SizedBox(width: 5,),
-                                    Text('9074343614',style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                                    Text(bannerinnerpage['members'][index]['phone'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
 
+
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 5,),
+
+
+
+                              Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+
+                                  children: [
+                                    Text("Email ",style: TextStyle(fontSize: 10,color: bg1,),),
+                                    SizedBox(width: 79,),
+                                    Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                                    SizedBox(width: 5,),
+                                    Text(bannerinnerpage['members'][index]['email'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+
+                                    SizedBox(width: 28,),
 
                                   ],
                                 ),
@@ -195,22 +216,44 @@ class _membersinnerState extends State<membersinner> {
                                 child: Row(
 
                                   children: [
-                                    Text("Package ",style: TextStyle(fontSize: 10,color: bg1,),),
-                                    SizedBox(width: 65,),
+                                    Text("Package",style: TextStyle(fontSize: 10,color: bg1,),),
+                                    SizedBox(width: 67,),
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                                     SizedBox(width: 5,),
-                                    Text(bannerinnerpage['members'][index]['packageSelected'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                                    Text(bannerinnerpage['members'][index]['packageAmount'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
 
-                                    SizedBox(width: 9,),
-                                    Padding(
-                                      padding:  EdgeInsets.symmetric(horizontal: 10),
-                                      child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Text("November 09 10:30 PM",style: TextStyle(fontSize: 7,color: textgrey1),)),
-                                    )
+                                    SizedBox(width: 28,),
+
                                   ],
                                 ),
                               ),
+
+                              SizedBox(height: 5,),
+
+                              Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+
+                                  children: [
+                                    Text("Address ",style: TextStyle(fontSize: 10,color: bg1,),),
+                                    SizedBox(width: 65,),
+                                    Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                                    SizedBox(width: 5,),
+                                    Text(bannerinnerpage['members'][index]['address'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+
+                                    SizedBox(width: 28,),
+                                    // Padding(
+                                    //   padding:  EdgeInsets.symmetric(horizontal: 10),
+                                    //   child: Align(
+                                    //       alignment: Alignment.bottomRight,
+                                    //       child: Text("November 09 10:30 PM",style: TextStyle(fontSize: 7,color: textgrey1),)),
+                                    // )
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 20,),
+
 
 
                             ],

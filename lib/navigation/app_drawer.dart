@@ -7,7 +7,7 @@ import '../commonpage/profilepage.dart';
 import '../commonpage/salaryaccount.dart';
 import '../commonpage/withdrawal.dart';
 import '../resources/color.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class appdrawer extends StatefulWidget {
   const appdrawer({super.key});
 
@@ -16,6 +16,18 @@ class appdrawer extends StatefulWidget {
 }
 
 class _appdrawerState extends State<appdrawer> {
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => loginpage()),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return  Drawer(
@@ -142,9 +154,7 @@ class _appdrawerState extends State<appdrawer> {
 
           InkWell(
             onTap: (){
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => loginpage()),
-                      (route) => false);
+              logout();
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),

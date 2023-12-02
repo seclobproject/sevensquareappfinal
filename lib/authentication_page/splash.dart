@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../resources/color.dart';
+import 'LandingPage.dart';
 import 'login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,11 +15,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
             () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => loginpage(
+                builder: (context) => Landing_Page(
+                  title: 'landingpage'
                 ))));
   }
 

@@ -529,7 +529,7 @@ class _AddMembersState extends State<AddMembers> {
         // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('User already exists!'),
+            content: Text(''),
             duration: Duration(seconds: 3),
           ),
         );

@@ -99,6 +99,15 @@ class _loginpageState extends State<loginpage> {
         children: [
 
 
+          Image.asset(
+            'assets/logo/logopng.png',
+            width: 130, // Set the desired width
+            height: 130, // Set the desired height
+          ),
+
+          SizedBox(height: 20,),
+
+
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             child: Align(
@@ -114,7 +123,7 @@ class _loginpageState extends State<loginpage> {
                 autocorrect: true,
                 style: TextStyle(color: Colors.white), // Set text color to white
                 decoration: InputDecoration(
-                  hintText: 'Enter your name',
+                  hintText: 'Enter your username',
                   hintStyle: TextStyle(color: Colors.grey),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -160,7 +169,7 @@ class _loginpageState extends State<loginpage> {
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     borderSide: BorderSide(color: bg1),
                   ),
-                  hintText: 'Password',
+                  hintText: 'Enter your password',
                   hintStyle: TextStyle(color: Colors.grey),
                   suffixIcon: IconButton(
                     icon: hidePassword
@@ -202,7 +211,7 @@ class _loginpageState extends State<loginpage> {
                     borderRadius: BorderRadius.circular(20)),
                 child: Center(
                     child: Text("Login",style: TextStyle(
-                        fontSize: 14,fontWeight: FontWeight.w700,color: bg1),)),
+                        fontSize: 14,fontWeight: FontWeight.w700,color: Colors.black),)),
               ),
             ),
           )

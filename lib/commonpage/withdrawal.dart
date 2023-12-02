@@ -16,9 +16,9 @@ class withdrawal extends StatefulWidget {
 
 class _withdrawalState extends State<withdrawal> {
 
-  String dropdownvalue = 'Apple';
+  String dropdownvalue = 'Accepted';
 
-  var items =  ['Apple','Banana','Grapes','Orange','watermelon','Pineapple'];
+  var items =  ['Accepted','Pending','Rejected'];
 
   var userid;
   var walletlist;
@@ -191,33 +191,30 @@ class _withdrawalState extends State<withdrawal> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: DropdownButton(
-
                       elevation: 0,
                       value: dropdownvalue,
-
                       icon: Icon(Icons.keyboard_arrow_down),
-
-                      items:items.map((String items) {
+                      items: items.map((String item) {
                         return DropdownMenuItem(
-
-                            value: items,
-                            child: Text(items,style: TextStyle(color: bg1,fontSize: 10),)
+                          value: item,
+                          child: Text(
+                            item,
+                            style: TextStyle(color: Colors.grey, fontSize: 10), // Set text color to black
+                          ),
                         );
-                      }
-                      ).toList(),
-
-                      onChanged: (String? newValue){
+                      }).toList(),
+                      onChanged: (String? newValue) {
                         setState(() {
                           dropdownvalue = newValue!;
                         });
                       },
-
                     ),
                   ),
                 ),
               ),
             ),
           ),
+
 
           SizedBox(height: 10,),
 

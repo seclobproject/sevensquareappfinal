@@ -367,7 +367,7 @@ class _bankaccountState extends State<bankaccount> {
                                 color: yellow,
                               borderRadius: BorderRadius.all(Radius.circular(10))
                             ),
-                            child: Center(child: Text("Upload",style: TextStyle(fontSize: 10),)),
+                            child: Center(child: Text("Upload Pancard",style: TextStyle(fontSize: 10),)),
                             height: 30,
                             width: 150,
 
@@ -389,7 +389,7 @@ class _bankaccountState extends State<bankaccount> {
                                 borderRadius: BorderRadius.all(Radius.circular(10))
                             ),
                             child: Center(
-                                child: Text("Upload",style: TextStyle(fontSize: 10),)),
+                                child: Text("Upload Aadhar",style: TextStyle(fontSize: 10),)),
                           ),
                         ),
                       ],
