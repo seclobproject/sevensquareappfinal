@@ -75,15 +75,14 @@ class _withdrawalState extends State<withdrawal> {
 
       body: _isLoading
           ?  Center(
-        child:  SvgPicture.asset(
-          'assets/svg/opsmsg.svg',
-          height: 300,
-        ),
+        child:  CircularProgressIndicator()
       )
           :Column(
+
         children: [
 
           SizedBox(height: 20,),
+
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -118,7 +117,7 @@ class _withdrawalState extends State<withdrawal> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(walletlist['earning'].toString(),style: TextStyle(color: bg1,fontSize: 18,fontWeight: FontWeight.w700),),
-                            
+
                           ],
                         )),
 
@@ -141,18 +140,18 @@ class _withdrawalState extends State<withdrawal> {
           InkWell(
             onTap: () {
               // Check if earning is greater than 0 before navigating
-              if (int.parse(walletlist['earning'].toString()) > 0) {
+              if (walletlist['earning'] != null &&
+                  double.parse(walletlist['earning'].toString()) > 0) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const withdrawalrequst()),
                 );
               } else {
-
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Cannot request withdrawal, earnings are 0.'),
+                  content: Text('Cannot request withdrawal, earnings are 0 or null.'),
                 ));
 
-                print("Cannot request withdrawal, earnings are 0.");
+                print("Cannot request withdrawal, earnings are 0 or null.");
               }
             },
             child: Padding(
@@ -167,12 +166,16 @@ class _withdrawalState extends State<withdrawal> {
                 child: Center(
                   child: Text(
                     "Request withdrawal money ",
-                    style: TextStyle(color: sevensgbg, fontWeight: FontWeight.w600, fontSize: 12),
+                    style: TextStyle(
+                        color: sevensgbg,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12),
                   ),
                 ),
               ),
             ),
           ),
+
 
 
           SizedBox(height: 25,),
@@ -245,16 +248,16 @@ class _withdrawalState extends State<withdrawal> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           Text("Amount",style: TextStyle(fontSize: 10,color: blackgray),),
-                           Text("TDS Amount",style: TextStyle(fontSize: 10,color: blackgray),),
-                           Text("Total Amount",style: TextStyle(fontSize: 10,color: blackgray),),
-                           Text("Status",style: TextStyle(fontSize: 10,color: blackgray),),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Amount",style: TextStyle(fontSize: 10,color: blackgray),),
+                            Text("TDS Amount",style: TextStyle(fontSize: 10,color: blackgray),),
+                            Text("Total Amount",style: TextStyle(fontSize: 10,color: blackgray),),
+                            Text("Status",style: TextStyle(fontSize: 10,color: blackgray),),
 
-                         ],
-                       ),
+                          ],
+                        ),
 
                         Divider(thickness: 0.1,color: bg1,),
 
@@ -264,15 +267,15 @@ class _withdrawalState extends State<withdrawal> {
                             Text(walletlist['transactionHistory'][index]['amount'].toString(),style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                             Text("₹100",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                             Text("₹900",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
-                           Container(
-                             height: 18,
-                             width: 50,
-                             decoration: BoxDecoration(
-                               color: greendark,
-                               borderRadius: BorderRadius.circular(5),
-                             ),
-                             child: Center(child: Text(walletlist['transactionHistory'][index]['status'],style: TextStyle(fontSize: 10,color: bg1),)),
-                           )
+                            Container(
+                              height: 18,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: greendark,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(child: Text(walletlist['transactionHistory'][index]['status'],style: TextStyle(fontSize: 10,color: bg1),)),
+                            )
 
                           ],
                         ),
@@ -287,6 +290,7 @@ class _withdrawalState extends State<withdrawal> {
 
 
         ],
+
       ),
 
     );

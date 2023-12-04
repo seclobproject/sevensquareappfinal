@@ -1,1 +1,1 @@
-const String baseURL = "http://sevensquaregroup.in";
+const String baseURL = "https://sevensquaregroup.in";

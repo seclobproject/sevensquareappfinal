@@ -176,7 +176,7 @@ class _homeState extends State<home> {
                         onTap: () {
                           // Navigator.push(
                           //   context,
-                          //   MaterialPageRoute(builder: (context) =>  MyHomePage()),
+                          //   MaterialPageRoute(builder: (context) =>  loader()),
                           // );
                         },
                         child: Center(

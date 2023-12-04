@@ -19,25 +19,62 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
 
   var userid;
 
+  // Future addammount() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   userid = prefs.getString('userid');
+  //
+  //   var reqData = {
+  //     'amount': discountedPriceController.text, // Use the value from the controller
+  //   };
+  //
+  //   var response = await WithdrawalService.withdrawal(reqData);
+  //   log.i('create withdrawal . $response');
+  //
+  //   print(response);
+  //   setState(() {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => withdrawal()),
+  //     );
+  //   });
+  // }
+
   Future addammount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userid = prefs.getString('userid');
 
-    var reqData = {
-      'amount': discountedPriceController.text, // Use the value from the controller
-    };
+    // Convert the entered amount to a double
+    double enteredAmount = double.parse(discountedPriceController.text);
 
-    var response = await WithdrawalService.withdrawal(reqData);
-    log.i('create withdrawal . $response');
+    if (enteredAmount < 500) {
+      // Show a snackbar with the error message
+      final snackBar = SnackBar(
+        content: Text('Amount must be 500 or more'),
+        backgroundColor: Colors.red,
+      );
 
-    print(response);
-    setState(() {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      // Proceed with the withdrawal request
+      var reqData = {
+        'amount': discountedPriceController.text,
+      };
+
+      var response = await WithdrawalService.withdrawal(reqData);
+      log.i('create withdrawal . $response');
+
+      print(response);
+
+      // Navigate to the withdrawal page
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => withdrawal()),
       );
-    });
+    }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +178,20 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          height: 25,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.all(Radius.circular(5))
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 25,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.all(Radius.circular(5))
+                            ),
+                            child: Center(
+                                child: Text("Cancel", style: TextStyle(color: bg1),)),
                           ),
-                          child: Center(
-                              child: Text("Cancel", style: TextStyle(color: bg1),)),
                         ),
                         SizedBox(width: 10,),
                         GestureDetector(

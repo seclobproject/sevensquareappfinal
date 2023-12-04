@@ -60,10 +60,7 @@ class _walletState extends State<salarysccount> {
       backgroundColor: sevensgbg,
       body: _isLoading
           ? Center(
-        child: SvgPicture.asset(
-          'assets/svg/opsmsg.svg',
-          height: 250,
-        ),
+        child: CircularProgressIndicator()
       )
           :Column(
 

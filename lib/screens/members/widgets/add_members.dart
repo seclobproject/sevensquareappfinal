@@ -485,6 +485,7 @@ class _AddMembersState extends State<AddMembers> {
   var packagedropdownvalue;
   bool hidePassword = true;
   bool isButtonDisabled = true;
+  bool isLoading = false;
 
   List package = [];
 
@@ -529,7 +530,7 @@ class _AddMembersState extends State<AddMembers> {
         // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(''),
+            content: Text('Not authenticated, token failed'),
             duration: Duration(seconds: 3),
           ),
         );
@@ -587,7 +588,7 @@ class _AddMembersState extends State<AddMembers> {
       return false;
     }
 
-    if (phone == null || phone!.isEmpty) {
+    if (phone == null || phone!.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please enter a valid phone number'),
@@ -673,11 +674,14 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 50,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
                           autocorrect: true,
+                          cursorWidth: 2.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           style: TextStyle(
                               color: Colors.white),
                           onChanged: (text) {
@@ -710,11 +714,14 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 50,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
                           autocorrect: true,
+                          cursorWidth: 2.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           onChanged: (text) {
                             setState(() {
                               email=text;
@@ -746,11 +753,15 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 50,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
                           autocorrect: true,
+                          cursorWidth: 2.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
+                            keyboardType: TextInputType.number,
                           onChanged: (text) {
                             setState(() {
                               phone=text;
@@ -783,7 +794,7 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 50,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -793,6 +804,9 @@ class _AddMembersState extends State<AddMembers> {
                             });
                           },
                           autocorrect: true,
+                          cursorWidth: 2.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             hintText: '',
@@ -821,7 +835,7 @@ class _AddMembersState extends State<AddMembers> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
-                        height: 40,
+                        height: 50,
                         decoration: BoxDecoration(
                           border: Border.all(color:bg1 ),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -871,12 +885,16 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 50,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
                           autocorrect: true,
                           style: TextStyle(color: Colors.white),
+                          cursorWidth: 2.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,// Adjust cursor width as needed
+                          // Adjust cursor radius as needed
                           obscureText: hidePassword,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -915,38 +933,69 @@ class _AddMembersState extends State<AddMembers> {
                       ),
                     ),
 
-
                     SizedBox(height: 20,),
-
 
                     InkWell(
                       onTap: () {
                         if (validateForm()) {
-                          createleave();
+                          // Set isLoading to true to show the loader
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          // Perform your asynchronous operation, for example, createleave()
+                          createleave().then((result) {
+                            // After the operation is complete, set isLoading to false
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
                         }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          height: 40,
-                          width: 444,
-                          decoration: BoxDecoration(
-                              color: yellow,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
-                          child: Center(
-                              child: Text("Submit",
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 444,
+                              decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Submit",
                                   style: TextStyle(
-                                      color: sevensgbg,
-                                      fontWeight: FontWeight.w700))),
+                                    color: sevensgbg,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Loader widget
+                            if (isLoading)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                   color: bg1,
+                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
 
 
                     SizedBox(height: 20,),
-
-
 
 
 

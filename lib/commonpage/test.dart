@@ -1,88 +1,85 @@
 import 'package:flutter/material.dart';
 
 
-
-class MyCustomExpansionPanel extends StatefulWidget {
+class loader extends StatefulWidget {
   @override
-  _MyCustomExpansionPanelState createState() => _MyCustomExpansionPanelState();
+  _loaderState createState() => _loaderState();
 }
 
-class _MyCustomExpansionPanelState extends State<MyCustomExpansionPanel> {
-  List<Item> _data = generateItems(3);
+class _loaderState extends State<loader> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    )..addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ExpansionPanelList(
-        elevation: 1,
-        expansionCallback: (int index, bool isExpanded) {
-          setState(() {
-            _data[index].isExpanded = !isExpanded;
-          });
-        },
-        children: _data.map<ExpansionPanel>((Item item) {
-          return ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-              return Container(
-                padding: EdgeInsets.all(16.0),
-                color: Colors.blue,
-                child: Text(
-                  item.headerValue,
-                  style: TextStyle(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Animated Loading Button'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Toggle loading state
+            setState(() {
+              isLoading = !isLoading;
+              if (isLoading) {
+                _animationController.repeat(); // Start the rotation animation
+              } else {
+                _animationController.reset(); // Stop the rotation animation
+              }
+            });
+
+            // Simulate some asynchronous task
+            Future.delayed(Duration(seconds: 2), () {
+              // Toggle loading state again after the task is done
+              setState(() {
+                isLoading = !isLoading;
+                _animationController.reset(); // Stop the rotation animation
+              });
+            });
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Your button label
+              Text(
+                'Click Me',
+                style: TextStyle(fontSize: 16),
+              ),
+              // Loading indicator (rotating circular progress)
+              isLoading
+                  ? Positioned(
+                right: 8.0,
+                child: Transform.rotate(
+                  angle: _animationController.value * 2.0 * 3.141592653589793,
+                  child: Icon(
+                    Icons.refresh,
                     color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            },
-            body: Container(
-              padding: EdgeInsets.all(16.0),
-              color: Colors.grey[200],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    item.expandedValue,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _data.remove(item);
-                      });
-                    },
-                    child: Text('Delete Panel'),
-                  ),
-                ],
-              ),
-            ),
-            isExpanded: item.isExpanded,
-          );
-        }).toList(),
+              )
+                  : Container(),
+            ],
+          ),
+        ),
       ),
     );
   }
-}
 
-class Item {
-  Item({
-    required this.expandedValue,
-    required this.headerValue,
-    this.isExpanded = false,
-  });
-
-  String expandedValue;
-  String headerValue;
-  bool isExpanded;
-}
-
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 }

@@ -131,7 +131,9 @@ class _memberspageState extends State<memberspage> {
         ],
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: (memberslisting != null && memberslisting['userStatus'] == "pending")
+          ? null // Disable the button
+          : FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         child: Icon(Icons.add),
         backgroundColor: yellow,
@@ -142,13 +144,8 @@ class _memberspageState extends State<memberspage> {
           );
         },
       ),
+
     );
-
-
-
-
-
-
 
 
   }
@@ -211,20 +208,13 @@ class membersLiting extends StatelessWidget {
                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                     SizedBox(width: 5,),
                     Container(
-                        width: 52,
+                        width: 120,
 
-                        child: Text(name,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),)),
+                        child: Text(name,
+                          overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)),
                     SizedBox(width: 50,),
 
-                    Container(
-                      height: 18,
-                      width: 65,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: yellow),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Center(child: Text(status,style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600,color: bg1),)),
-                    ),
+
 
                   ],
                 ),
@@ -255,6 +245,22 @@ class membersLiting extends StatelessWidget {
               ),
               SizedBox(height: 5,),
 
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+
+                  children: [
+                    Text("Status",style: TextStyle(fontSize: 10,color: bg1,),),
+                    SizedBox(width: 77,),
+                    Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                    SizedBox(width: 5,),
+
+
+                    Center(child: Text(status,style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600,color: yellow),)),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5,),
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -351,7 +357,5 @@ class membersLiting extends StatelessWidget {
     );
   }
 }
-
-
 
 

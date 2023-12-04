@@ -77,6 +77,11 @@ class _testState extends State<test> {
       backgroundColor: sevensgbg,
       appBar: AppBar(
         backgroundColor: sevensgbg,
+        iconTheme: IconThemeData(
+          color:bg1, //change your color here
+        ),
+        centerTitle: true,
+        title: Text("Verify Account",style: TextStyle(color: bg1,fontSize: 16),),
 
       ),
       body: Center(
@@ -110,7 +115,7 @@ class _testState extends State<test> {
                       alignment:Alignment.topLeft,
                       child: Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 20),
-                        child: Text("₹10000",style: TextStyle(fontSize: 15,color: bg1,fontWeight: FontWeight.w700),),
+                        child: Text("₹1000",style: TextStyle(fontSize: 15,color: bg1,fontWeight: FontWeight.w700),),
                       ),
                     ),
 
@@ -120,7 +125,7 @@ class _testState extends State<test> {
                       alignment:Alignment.topLeft,
                       child: Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 20),
-                        child: Text("Enter your referral ID",style: TextStyle(fontSize: 11,color: bg1),),
+                        child: Text("Enter your Transaction ID",style: TextStyle(fontSize: 11,color: bg1),),
                       ),
                     ),
                     SizedBox(height: 5,),
@@ -136,6 +141,8 @@ class _testState extends State<test> {
                             });
                           },
                           style: TextStyle(color: Colors.white),
+                          cursorHeight: 10,
+                          cursorColor: bg1,
                           decoration: InputDecoration(
 
                             hintStyle: TextStyle(color: Colors.grey),
@@ -187,7 +194,7 @@ class _testState extends State<test> {
                           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                           child: Image.file(File(imageUrl!)),
                         )
-                        : Text("No image selected"),
+                        : Text("No image selected",style: TextStyle(color: Colors.red),),
                     SizedBox(height: 10),
 
                     GestureDetector(

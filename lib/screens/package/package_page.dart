@@ -79,24 +79,35 @@ class _packageState extends State<package> {
                     padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                     child: Container(
                       width: 444,
-                      height: 125,
+
                       // margin: EdgeInsets.all(10),
                       child: Column(
                         children: [
                           SizedBox(height: 10,),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Package Name',style: TextStyle(fontSize: 11,color: Colors.white),),
-                                SizedBox(width: 15,),
-                                Text('Amount',style: TextStyle(fontSize: 11,color: Colors.white),),
-                                SizedBox(width: 15,),
-                                Text('Amount Ex.GST',style: TextStyle(fontSize: 11,color: Colors.white),),
-                                SizedBox(width: 15,),
-                                Text('Type',style: TextStyle(fontSize: 11,color: Colors.white),),
-                              ],
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Container(
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10
+                                ))
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Package Name',style: TextStyle(fontSize: 11,color: Colors.black),),
+                                    SizedBox(width: 15,),
+                                    Text('Amount',style: TextStyle(fontSize: 11,color: Colors.black),),
+                                    SizedBox(width: 15,),
+                                    Text('Amount Ex.GST',style: TextStyle(fontSize: 11,color:Colors.black),),
+                                    SizedBox(width: 15,),
+                                    Text('Type',style: TextStyle(fontSize: 11,color:Colors.black),),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
 
@@ -133,7 +144,7 @@ class _packageState extends State<package> {
                                     SizedBox(width: 30,),
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 10)),
                                     SizedBox(width: 10,),
-                                    Text(package['results'][0]['usersCount'].toString(),style: TextStyle(color: bg1,fontSize: 10,fontWeight: FontWeight.w600)),
+                                    Text(package['results'][index]['usersCount'].toString(),style: TextStyle(color: bg1,fontSize: 10,fontWeight: FontWeight.w600)),
                                   ],
                                 )),
                           ),
@@ -149,7 +160,7 @@ class _packageState extends State<package> {
                                     SizedBox(width: 30,),
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 10)),
                                     SizedBox(width: 10,),
-                                    Text(package['results'][0]['addOnUsers'].toString(),style: TextStyle(color: bg1,fontSize: 10,fontWeight: FontWeight.w600)),
+                                    Text(package['results'][index]['addOnUsers'].toString(),style: TextStyle(color: bg1,fontSize: 10,fontWeight: FontWeight.w600)),
                                   ],
                                 )),
                           ),
@@ -159,7 +170,8 @@ class _packageState extends State<package> {
                             child: Align(
                                 alignment: Alignment.bottomRight,
                                 child: Text("November 09 10:30 PM",style: TextStyle(fontSize: 10,color: textgrey1),)),
-                          )
+                          ),
+                          SizedBox(height: 10,),
 
 
                         ],
