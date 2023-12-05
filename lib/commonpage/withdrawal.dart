@@ -258,15 +258,14 @@ class _withdrawalState extends State<withdrawal> {
 
                           ],
                         ),
-
                         Divider(thickness: 0.1,color: bg1,),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(walletlist['transactionHistory'][index]['amount'].toString(),style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
-                            Text("₹100",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
-                            Text("₹900",style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
+                            Text(walletlist['transactionHistory'][index]['TDSAmount'].toString(),style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
+                            Text(walletlist['transactionHistory'][index]['lastAmount'].toString(),style: TextStyle(fontSize: 10,color: bg1,fontWeight: FontWeight.w800),),
                             Container(
                               height: 18,
                               width: 50,
@@ -279,8 +278,6 @@ class _withdrawalState extends State<withdrawal> {
 
                           ],
                         ),
-
-
 
                       ],
                     ),

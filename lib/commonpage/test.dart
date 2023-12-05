@@ -1,85 +1,66 @@
 import 'package:flutter/material.dart';
 
 
-class loader extends StatefulWidget {
+
+class MyDropdown extends StatefulWidget {
   @override
-  _loaderState createState() => _loaderState();
+  _MyDropdownState createState() => _MyDropdownState();
 }
 
-class _loaderState extends State<loader> with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  bool isLoading = false;
+class _MyDropdownState extends State<MyDropdown> {
+  String? selectedValue;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 1),
-    )..addListener(() {
-      setState(() {});
-    });
+    selectedValue = 'Option 1';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Animated Loading Button'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Toggle loading state
-            setState(() {
-              isLoading = !isLoading;
-              if (isLoading) {
-                _animationController.repeat(); // Start the rotation animation
-              } else {
-                _animationController.reset(); // Stop the rotation animation
-              }
-            });
-
-            // Simulate some asynchronous task
-            Future.delayed(Duration(seconds: 2), () {
-              // Toggle loading state again after the task is done
-              setState(() {
-                isLoading = !isLoading;
-                _animationController.reset(); // Stop the rotation animation
-              });
-            });
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Your button label
-              Text(
-                'Click Me',
-                style: TextStyle(fontSize: 16),
-              ),
-              // Loading indicator (rotating circular progress)
-              isLoading
-                  ? Positioned(
-                right: 8.0,
-                child: Transform.rotate(
-                  angle: _animationController.value * 2.0 * 3.141592653589793,
-                  child: Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-                  : Container(),
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            'Select an option:',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
-        ),
+          SizedBox(height: 10.0),
+          DropdownButton<String>(
+            value: selectedValue,
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedValue = newValue;
+              });
+            },
+            items: ['Option 1', 'Option 2', 'Option 3']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            isExpanded: true,
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 24.0,
+            elevation: 16,
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
+            underline: Container(
+              height: 2,
+              color: Colors.blue,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          ElevatedButton(
+            onPressed: () {
+              // Perform some action with the selected value
+              print('Selected value: $selectedValue');
+            },
+            child: Text('Submit'),
+          ),
+        ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 }

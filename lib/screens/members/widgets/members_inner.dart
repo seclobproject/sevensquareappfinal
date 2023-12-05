@@ -119,19 +119,6 @@ class _membersinnerState extends State<membersinner> {
 
                                         child: Text(bannerinnerpage['members'][index]['name'],style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),)),
 
-
-                                    SizedBox(width: 50,),
-
-                                    Container(
-                                      height: 18,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                          color: yellow,
-                                          borderRadius: BorderRadius.circular(5)
-                                      ),
-                                      child: Center(child: Text(bannerinnerpage['members'][index]['userStatus'],style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600),)),
-                                    ),
-
                                   ],
                                 ),
                               ),
@@ -177,13 +164,36 @@ class _membersinnerState extends State<membersinner> {
                                 child: Row(
 
                                   children: [
+                                    Text("Status",style: TextStyle(fontSize: 10,color: bg1,),),
+                                    SizedBox(width: 78,),
+                                    Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
+                                    SizedBox(width: 5,),
+                                    Container(
+                                        width: 150,
+                                        child: Text(bannerinnerpage['members'][index]['userStatus'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: yellow,fontWeight: FontWeight.w600,
+                                              fontSize: 11),
+
+                                        )),
+                                  ],
+                                ),
+                              ),
+
+
+                              SizedBox(height: 5,),
+
+                              Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+
+                                  children: [
                                     Text("Phone Number",style: TextStyle(fontSize: 10,color: bg1,),),
                                     SizedBox(width: 35,),
                                     Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                                     SizedBox(width: 5,),
                                     Text(bannerinnerpage['members'][index]['phone'].toString(),style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
-
-
                                   ],
                                 ),
                               ),

@@ -464,8 +464,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../navigation/bottom_tabs_screen.dart';
@@ -591,7 +589,7 @@ class _AddMembersState extends State<AddMembers> {
     if (phone == null || phone!.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a valid phone number'),
+          content: Text('Phone number must be at least 10 numbers long'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -674,36 +672,34 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          autocorrect: true,
-                          cursorWidth: 2.0,
-                          cursorColor: bg1,
-                          cursorHeight: 12,
-                          style: TextStyle(
-                              color: Colors.white),
-                          onChanged: (text) {
-                            setState(() {
-                              name=text;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
-                            ),
-                          ),),
-                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: TextField(
+                        autocorrect: true,
+                        cursorWidth: 1.0,
+                        cursorColor: bg1,
+                        cursorHeight: 12,
+                        style: TextStyle(
+                            color: Colors.white),
+                        onChanged: (text) {
+                          setState(() {
+                            name=text;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: '',
+                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                          // filled: true,
+                          // fillColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color:  bg1),
+                          ),
+                        ),),
                     ),
 
                     Padding(
@@ -714,35 +710,33 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          autocorrect: true,
-                          cursorWidth: 2.0,
-                          cursorColor: bg1,
-                          cursorHeight: 12,
-                          onChanged: (text) {
-                            setState(() {
-                              email=text;
-                            });
-                          },
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
-                            ),
-                          ),),
-                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: TextField(
+                        autocorrect: true,
+                        cursorWidth: 1.0,
+                        cursorColor: bg1,
+                        cursorHeight: 12,
+                        onChanged: (text) {
+                          setState(() {
+                            email=text;
+                          });
+                        },
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: '',
+                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                          // filled: true,
+                          // fillColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color:  bg1),
+                          ),
+                        ),),
                     ),
 
                     Padding(
@@ -753,37 +747,35 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          autocorrect: true,
-                          cursorWidth: 2.0,
-                          cursorColor: bg1,
-                          cursorHeight: 12,
-                            keyboardType: TextInputType.number,
-                          onChanged: (text) {
-                            setState(() {
-                              phone=text;
-                            });
-                          },
-                          style: TextStyle(
-                              color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
-                            ),
-                          ),),
-                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: TextField(
+                        autocorrect: true,
+                        cursorWidth: 1.0,
+                        cursorColor: bg1,
+                        cursorHeight: 12,
+                          keyboardType: TextInputType.number,
+                        onChanged: (text) {
+                          setState(() {
+                            phone=text;
+                          });
+                        },
+                        style: TextStyle(
+                            color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: '',
+                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                          // filled: true,
+                          // fillColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color:  bg1),
+                          ),
+                        ),),
                     ),
 
                     Padding(
@@ -794,35 +786,33 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          onChanged: (text) {
-                            setState(() {
-                              address=text;
-                            });
-                          },
-                          autocorrect: true,
-                          cursorWidth: 2.0,
-                          cursorColor: bg1,
-                          cursorHeight: 12,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
-                            ),
-                          ),),
-                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            address=text;
+                          });
+                        },
+                        autocorrect: true,
+                        cursorWidth: 2.0,
+                        cursorColor: bg1,
+                        cursorHeight: 12,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: '',
+                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                          // filled: true,
+                          // fillColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color:  bg1),
+                          ),
+                        ),),
                     ),
 
                     Padding(
@@ -832,47 +822,47 @@ class _AddMembersState extends State<AddMembers> {
                           child: Text("Choose Package ",style: TextStyle(color: bg1),)),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(color:bg1 ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 35),
-                            child: DropdownButtonFormField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Select Package',
-                                  hintStyle: TextStyle(fontSize: 12,color: bg1)// Remove underline
-                              ),
-                              isExpanded: true,
-                              dropdownColor: sevensgbg,
-                              icon: Icon(Icons.arrow_drop_down, color: bg1),
-                              iconSize: 20,
-                              elevation: 10,
-                              style: TextStyle(color: bg1, fontSize: 15),
-                              items: package.map((item) {
-                                print(item);
-                                return DropdownMenuItem(
-                                  value: item,
-                                  child: Text(
-                                    item['amount'].toString(),
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newVal) {
-                                setState(() {
-                                  packagedropdownvalue = newVal;
-                                });
-                              },
-                              value: packagedropdownvalue,
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(color:bg1 ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20),
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+
+                              border: InputBorder.none,
+                              hintText: 'Select Package',
+                              hintStyle: TextStyle(fontSize: 12, color: bg1), // Remove underline
                             ),
-                          ),
+                            isExpanded: true,
+                            dropdownColor: sevensgbg,
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.white), // Change color to white
+                            iconSize: 20,
+                            elevation: 16,
+                            style: TextStyle(color: bg1, fontSize: 15),
+                            items: package.map((item) {
+                              print(item);
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(
+                                  item['amount'].toString(),
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (newVal) {
+                              setState(() {
+                                packagedropdownvalue = newVal;
+                              });
+                            },
+                            value: packagedropdownvalue,
+                          )
+
                         ),
                       ),
                     ),
@@ -885,51 +875,49 @@ class _AddMembersState extends State<AddMembers> {
                     ),
 
                     Container(
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          autocorrect: true,
-                          style: TextStyle(color: Colors.white),
-                          cursorWidth: 2.0,
-                          cursorColor: bg1,
-                          cursorHeight: 12,// Adjust cursor width as needed
-                          // Adjust cursor radius as needed
-                          obscureText: hidePassword,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1),
-                            ),
-                            hintStyle: TextStyle(color: Colors.grey),
-                            suffixIcon: IconButton(
-                              icon: hidePassword
-                                  ? Icon(Icons.visibility_off)
-                                  : Icon(Icons.visibility),
-                              onPressed: () {
-                                setState(() {
-                                  hidePassword = !hidePassword;
-                                });
-                              },
-                            ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: TextField(
+                        autocorrect: true,
+                        style: TextStyle(color: Colors.white),
+                        cursorWidth: 1.0,
+                        cursorColor: bg1,
+                        cursorHeight: 12,// Adjust cursor width as needed
+                        // Adjust cursor radius as needed
+                        obscureText: hidePassword,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1, width: 1),
                           ),
-                          onChanged: (text) {
-                            setState(() {
-                              password = text;
-
-                              // Add a minimum length check for the password
-                              if (password!.length < 8) {
-                                // You can display an error message or handle it as needed
-                                // For example, setting an error state or showing a snackbar
-                                print('Password must be at least 8 characters long');
-                              }
-                            });
-                          },
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: bg1),
+                          ),
+                          hintStyle: TextStyle(color: Colors.grey),
+                          suffixIcon: IconButton(
+                            icon: hidePassword
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
+                              });
+                            },
+                          ),
                         ),
+                        onChanged: (text) {
+                          setState(() {
+                            password = text;
+
+                            // Add a minimum length check for the password
+                            if (password!.length < 8) {
+                              // You can display an error message or handle it as needed
+                              // For example, setting an error state or showing a snackbar
+                              print('Password must be at least 8 characters long');
+                            }
+                          });
+                        },
                       ),
                     ),
 

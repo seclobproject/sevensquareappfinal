@@ -16,7 +16,15 @@ class WalletService {
       rethrow;
     }
   }
-
+  static Future walletstransation() async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.get('$baseURL/api/wallet/all-transactions');
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
 
 }

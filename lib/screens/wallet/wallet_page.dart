@@ -17,6 +17,7 @@ class wallet extends StatefulWidget {
 class _walletState extends State<wallet> {
   var userid;
   var walletlist;
+  var walletlisttransation;
   bool _isLoading = true;
   // List<int> unrealisedEarning = [];
   List<dynamic> unrealisedEarning = [];
@@ -55,8 +56,25 @@ class _walletState extends State<wallet> {
 
   }
 
-  Future _initLoad() async {
-    await Future.wait([_getwallet()]);
+  Future _getwallettransation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await WalletService.walletstransation();
+    log.i('Wallet Transation list.. $response');
+    print(walletlisttransation);
+
+    setState(() {
+      walletlisttransation = response;
+    });
+  }
+
+
+    Future _initLoad() async {
+    await Future.wait([
+      _getwallettransation(),
+      _getwallet()
+
+    ]);
     _isLoading = false;
   }
 
@@ -180,7 +198,7 @@ class _walletState extends State<wallet> {
           Expanded(
 
             child: ListView.builder(
-                itemCount: walletlist['transactionHistory'].length,
+                itemCount: walletlisttransation['result'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -204,15 +222,15 @@ class _walletState extends State<wallet> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(walletlist['transactionHistory'][0]['referenceID'],
+                                Text( walletlisttransation['result'][index]['transaction']['name'],
                                     style: TextStyle(color: bg1, fontSize: 10)),
-                                Text("Name", style: TextStyle(color: bg1, fontSize: 10)),
+                                Text("sponserName", style: TextStyle(color: bg1, fontSize: 10)),
                               ],
                             ),
                             Expanded(child: SizedBox()),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text('\$${walletlist['transactionHistory'][0]['amount'].toString()}',
+                              child: Text(walletlisttransation['result'][index]['transaction']['amount'].toString(),
                                   style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
                             ),
                           ],
@@ -221,7 +239,7 @@ class _walletState extends State<wallet> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("26 October 2023 10:30 PM", style: TextStyle(fontSize: 8, color: bg1)),
+                            Text(walletlisttransation['result'][index]['formattedDate'], style: TextStyle(fontSize: 9, color: bg1)),
                             Container(
                               height: 20,
                               width: 60,
@@ -229,7 +247,7 @@ class _walletState extends State<wallet> {
                                   color: yellow,
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
                               child: Center(
-                                  child: Text(walletlist['transactionHistory'][0]['status'],
+                                  child: Text(walletlisttransation['result'][index]['transaction']['status'],
                                       style: TextStyle(
                                         fontSize: 10,
                                       ))),

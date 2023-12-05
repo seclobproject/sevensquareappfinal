@@ -137,7 +137,7 @@ class _bankaccountState extends State<bankaccount> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -174,7 +174,7 @@ class _bankaccountState extends State<bankaccount> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -210,7 +210,7 @@ class _bankaccountState extends State<bankaccount> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -247,7 +247,7 @@ class _bankaccountState extends State<bankaccount> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -286,7 +286,7 @@ class _bankaccountState extends State<bankaccount> {
 
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -324,7 +324,7 @@ class _bankaccountState extends State<bankaccount> {
 
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(

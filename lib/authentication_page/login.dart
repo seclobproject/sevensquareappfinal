@@ -116,10 +116,13 @@ class _loginpageState extends State<loginpage> {
           ),
 
           Container(
-            height: 55,
+            height: 60,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
+                cursorWidth: 2.0,
+                cursorColor: bg1,
+                cursorHeight: 12,
                 autocorrect: true,
                 style: TextStyle(color: Colors.white), // Set text color to white
                 decoration: InputDecoration(
@@ -153,11 +156,14 @@ class _loginpageState extends State<loginpage> {
           ),
 
           Container(
-            height: 55,
+            height: 60,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 autocorrect: true,
+                cursorWidth: 2.0,
+                cursorColor: bg1,
+                cursorHeight: 12,
                 style: TextStyle(color: Colors.white),
                 obscureText: hidePassword, //show/hide password
                 decoration: InputDecoration(

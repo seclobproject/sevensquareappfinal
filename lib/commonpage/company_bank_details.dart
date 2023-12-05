@@ -50,17 +50,25 @@ class _companybankdetailsState extends State<companybankdetails> {
                         Text("30570200000269",style: TextStyle(color: bg1,fontSize: 16),),
                         SizedBox(height: 10,),
                         Text("IFSC Code",style: TextStyle(color: bg1),),
+                        SizedBox(height: 10,),
                         Text("BARB0WCALIC",style: TextStyle(color: bg1,fontSize: 16),),
+                        SizedBox(height: 10,),
+                        Text("Bank Name",style: TextStyle(color: bg1),),
+                        SizedBox(height: 10,),
+                        Text("BANK OF BARODA",style: TextStyle(color: bg1,fontSize: 16),),
                         SizedBox(height: 10,),
                         Text("QR Code",style: TextStyle(color: bg1),),
                         SizedBox(height: 10,),
 
-                        Image.asset('assets/logo/imgqr.jpg',
-                        height: 150,
+                        Container(
+                          height: 220,
+                          width: 220,
+                          color: bg1,
+                          child:  SvgPicture.asset(
+                            'assets/svg/qrcode.svg',
+                            fit: BoxFit.fitHeight,
+                          ),
                         )
-
-
-
 
                       ],
 
@@ -76,7 +84,6 @@ class _companybankdetailsState extends State<companybankdetails> {
 
             ),
           ),
-
 
         ],
 

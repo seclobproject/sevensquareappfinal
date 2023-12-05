@@ -20,7 +20,7 @@ class _adduserpinState extends State<adduserpin> {
   var packages;
   var packagedropdownvalue;
   bool hidePassword = true;
-
+  bool isButtonDisabled = true;
   List package = [];
 
   String? name;
@@ -76,6 +76,85 @@ class _adduserpinState extends State<adduserpin> {
 
 
 
+  void updateButtonState() {
+    setState(() {
+      isButtonDisabled = name == null ||
+          email == null ||
+          phone == null ||
+          address == null ||
+          password == null ||
+          packagedropdownvalue == null;
+    });
+  }
+
+  bool validateForm() {
+    if (name == null || name!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid name'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (email == null ||
+        !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+            .hasMatch(email!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid email address'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (phone == null || phone!.length < 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Phone number must be at least 10 numbers long'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (address == null || address!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid address'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (packagedropdownvalue == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please choose a package'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (password == null || password!.length < 8) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password must be at least 8 characters long'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -118,10 +197,13 @@ class _adduserpinState extends State<adduserpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
+                          cursorWidth: 1.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           autocorrect: true,
                           style: TextStyle(
                               color: Colors.white),
@@ -155,10 +237,13 @@ class _adduserpinState extends State<adduserpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
+                          cursorWidth: 1.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           autocorrect: true,
                           onChanged: (text) {
                             setState(() {
@@ -191,10 +276,13 @@ class _adduserpinState extends State<adduserpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
+                          cursorWidth: 1.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           autocorrect: true,
                           onChanged: (text) {
                             setState(() {
@@ -228,7 +316,7 @@ class _adduserpinState extends State<adduserpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -238,6 +326,9 @@ class _adduserpinState extends State<adduserpin> {
                             });
                           },
                           autocorrect: true,
+                          cursorWidth: 1.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             hintText: '',
@@ -263,28 +354,28 @@ class _adduserpinState extends State<adduserpin> {
                           child: Text("Choose Package ",style: TextStyle(color: bg1),)),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border.all(color:bg1 ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 35),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(color:bg1 ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Center(
+                        child: Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 20),
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Select Package',
-                                  hintStyle: TextStyle(fontSize: 12,color: bg1)// Remove underline
+
+                                border: InputBorder.none,
+                                hintText: 'Select Package',
+                                hintStyle: TextStyle(fontSize: 12, color: bg1), // Remove underline
                               ),
                               isExpanded: true,
                               dropdownColor: sevensgbg,
-                              icon: Icon(Icons.arrow_drop_down, color: bg1),
+                              icon: Icon(Icons.arrow_drop_down, color: Colors.white), // Change color to white
                               iconSize: 20,
-                              elevation: 10,
+                              elevation: 16,
                               style: TextStyle(color: bg1, fontSize: 15),
                               items: package.map((item) {
                                 print(item);
@@ -292,7 +383,7 @@ class _adduserpinState extends State<adduserpin> {
                                   value: item,
                                   child: Text(
                                     item['amount'].toString(),
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 );
                               }).toList(),
@@ -302,8 +393,8 @@ class _adduserpinState extends State<adduserpin> {
                                 });
                               },
                               value: packagedropdownvalue,
-                            ),
-                          ),
+                            )
+
                         ),
                       ),
                     ),
@@ -318,7 +409,7 @@ class _adduserpinState extends State<adduserpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -328,6 +419,9 @@ class _adduserpinState extends State<adduserpin> {
                             });
                           },
                           autocorrect: true,
+                          cursorWidth: 1.0,
+                          cursorColor: bg1,
+                          cursorHeight: 12,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             hintText: '',

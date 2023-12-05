@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../authentication_page/login.dart';
 import '../commonpage/bankdetails.dart';
+import '../commonpage/bankdetails_show.dart';
 import '../commonpage/company_bank_details.dart';
 import '../commonpage/profilepage.dart';
+
 import '../commonpage/salaryaccount.dart';
 import '../commonpage/withdrawal.dart';
 import '../resources/color.dart';
@@ -286,7 +288,7 @@ class _appdrawerState extends State<appdrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const bankaccount()),
+                MaterialPageRoute(builder: (context) => const banketailslist()),
               );
             },
             child: Padding(
@@ -306,64 +308,6 @@ class _appdrawerState extends State<appdrawer> {
               ),
             ),
           ),
-
-
-
-          SizedBox(height: 10,),
-
-
-          package != null && package['userStatus'] == "pending"
-              ? IgnorePointer(
-            ignoring: true,
-            child: InkWell(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const profilepage()),
-                // );
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/svg/share.svg',
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(width: 15,),
-                      Text('Refer a friend', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13, color: textColor1),)
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ): InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const profilepage()),
-              // );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/svg/share.svg',
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(width: 15,),
-                    Text('Refer a friend', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13, color: bg1),)
-                  ],
-                ),
-              ),
-            ),
-          ),
-
 
           SizedBox(height: 10,),
 
@@ -445,8 +389,6 @@ class _appdrawerState extends State<appdrawer> {
               ),
             ),
           ),
-
-
 
 
         ],
