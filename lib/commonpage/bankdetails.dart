@@ -28,6 +28,9 @@ class _bankaccountState extends State<bankaccount> {
   String? aadhar;
   String? pan;
 
+  bool isButtonDisabled = true;
+  bool isLoading = false;
+
   Future<void> uploadImages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userid = (prefs.getString('userid') ?? "");
@@ -93,6 +96,107 @@ class _bankaccountState extends State<bankaccount> {
   }
 
 
+  void updateButtonState() {
+    setState(() {
+      isButtonDisabled = holderName == null ||
+          accountNum == null ||
+          ifscCode == null ||
+          bank == null ||
+          aadhar == null ||
+          pan == null ||
+          imageUrl1 == null;
+          imageUrl2 == null;
+
+
+    });
+  }
+
+  bool validateForm() {
+    if (holderName == null || holderName!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a name'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+
+
+    if (accountNum == null || accountNum!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a account number'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (ifscCode == null || ifscCode!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a  ifscCode'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (bank == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a bank name'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (aadhar == null || aadhar!.length < 12) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Aadhar must be at least 12 characters long'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (pan == null || pan!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a bank pancard number'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (imageUrl1 == null || imageUrl1!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('please Uploade a pancard'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (imageUrl2 == null || imageUrl2!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('please uploade a aadharcard'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    return true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +207,7 @@ class _bankaccountState extends State<bankaccount> {
           color:bg1, //change your color here
         ),
         centerTitle: true,
-        title: Text("Bank Details",style: TextStyle(color: bg1,fontSize: 16),),
+        title: Text("Add Bank Details",style: TextStyle(color: bg1,fontSize: 16),),
 
       ),
       backgroundColor: sevensgbg,
@@ -424,26 +528,83 @@ class _bankaccountState extends State<bankaccount> {
                     SizedBox(height: 10,),
 
 
-
                     InkWell(
-                      onTap: (){
+                      onTap: () {
+                        if (validateForm()) {
+                          // Set isLoading to true to show the loader
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        uploadImages();
+                          // Perform your asynchronous operation, for example, createleave()
+                          uploadImages().then((result) {
+                            // After the operation is complete, set isLoading to false
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          height: 40,
-                          width: 444,
-                          decoration: BoxDecoration(
-                              color: yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          child: Center(
-                              child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w700),)),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 444,
+                              decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Submit",
+                                  style: TextStyle(
+                                    color: sevensgbg,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Loader widget
+                            if (isLoading)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: bg1,
+                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
+                    // InkWell(
+                    //   onTap: (){
+                    //
+                    //     uploadImages();
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 20),
+                    //     child: Container(
+                    //       height: 40,
+                    //       width: 444,
+                    //       decoration: BoxDecoration(
+                    //           color: yellow,
+                    //           borderRadius: BorderRadius.all(Radius.circular(10))
+                    //       ),
+                    //       child: Center(
+                    //           child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w700),)),
+                    //     ),
+                    //   ),
+                    // ),
 
 
 

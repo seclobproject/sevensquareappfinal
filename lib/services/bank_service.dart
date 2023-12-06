@@ -16,4 +16,14 @@ class BankService {
     }
   }
 
+  static Future banklistdetails() async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.get('$baseURL/api/bank/get-details');
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

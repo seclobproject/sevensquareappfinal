@@ -22,6 +22,7 @@ class _adduserpinState extends State<adduserpin> {
   bool hidePassword = true;
   bool isButtonDisabled = true;
   List package = [];
+  bool isLoading = false;
 
   String? name;
   String? email;
@@ -444,20 +445,60 @@ class _adduserpinState extends State<adduserpin> {
 
 
                     InkWell(
-                      onTap: (){
-                        addmember();
+                      onTap: () {
+                        if (validateForm()) {
+                          // Set isLoading to true to show the loader
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          // Perform your asynchronous operation, for example, createleave()
+                          addmember().then((result) {
+                            // After the operation is complete, set isLoading to false
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          height: 40,
-                          width: 444,
-                          decoration: BoxDecoration(
-                              color: yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          child: Center(
-                              child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w700),)),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 444,
+                              decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Submit",
+                                  style: TextStyle(
+                                    color: sevensgbg,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Loader widget
+                            if (isLoading)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: bg1,
+                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),

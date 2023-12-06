@@ -585,7 +585,7 @@ class _homeState extends State<home> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            "Verfied your profile",
+                            "Verified your profile",
                             style: TextStyle(
                               color: greenbg,
                               fontSize: 16,

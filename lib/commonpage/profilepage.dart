@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sevensquare/commonpage/terms_and_conditions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
 import '../services/home_service.dart';
@@ -146,16 +147,19 @@ class _profilepageState extends State<profilepage> {
                   SizedBox(height: 10,),
 
                   
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Terms & Conditions",style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 13),),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const terms()),
+                      );
+                    },
+                    child: Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 20),
+                      child: Text("Terms & Conditions",style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 13),),
+                    ),
                   ),
-                  SizedBox(height: 10,),
 
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Privacy Policy",style: TextStyle(color: bg1,fontWeight: FontWeight.w700,fontSize: 13),),
-                  ),
                 ],
               ),
             ),

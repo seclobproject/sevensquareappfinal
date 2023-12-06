@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
+import '../services/bank_service.dart';
+import '../support/logger.dart';
 import 'bankdetails.dart';
 
 class banketailslist extends StatefulWidget {
@@ -11,6 +14,42 @@ class banketailslist extends StatefulWidget {
 }
 
 class _banketailslistState extends State<banketailslist> {
+
+
+  var userid;
+  var bankdetails;
+  bool _isLoading = true;
+
+  Future _getbankdetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await BankService.banklistdetails();
+    log.i('bank details list.. $response');
+    setState(() {
+      bankdetails = response;
+
+      print(bankdetails['sts']);
+    });
+  }
+
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _getbankdetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -24,9 +63,13 @@ class _banketailslistState extends State<banketailslist> {
         title: Text("Bank Details Show",style: TextStyle(color: bg1,fontSize: 16),),
 
       ),
-      body: Column(
+      body:   _isLoading
+          ? Center(
+          child:CircularProgressIndicator()
+      )
+          :Column(
         children: [
-
+          bankdetails['sts'] == "01" ?
           Padding(
             padding:  EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             child: Container(
@@ -50,8 +93,17 @@ class _banketailslistState extends State<banketailslist> {
                         SizedBox(width: 5,),
                         Container(
                             width: 120,
+                        //
+                        //     child: Text(bankdetails['bankDetails']['holderName'],
+                        //       overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)),
+                        // SizedBox(width: 50,),
 
-                            child: Text("name",
+                      child: Text(bankdetails != null &&
+                          bankdetails['bankDetails'] != null &&
+                          bankdetails['bankDetails']['holderName'] != null &&
+                          bankdetails['bankDetails']['holderName'] != null
+                          ? bankdetails['bankDetails']['holderName']
+                          : "NIL",
                               overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)),
                         SizedBox(width: 50,),
 
@@ -74,17 +126,19 @@ class _banketailslistState extends State<banketailslist> {
                         SizedBox(width: 5,),
                         Container(
                             width: 150,
-                            child: Text("sponser",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: bg1,fontWeight: FontWeight.w600,
-                                  fontSize: 11),
-
-                            )),
+                            child: Text(bankdetails != null &&
+                                bankdetails['bankDetails'] != null &&
+                                bankdetails['bankDetails']['accountNum'] != null &&
+                                bankdetails['bankDetails']['accountNum'] != null
+                                ? bankdetails['bankDetails']['accountNum']
+                                : "NIL",
+                              overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)),
                       ],
                     ),
                   ),
                   SizedBox(height: 5,),
+
+                  //accountNum
 
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -96,8 +150,16 @@ class _banketailslistState extends State<banketailslist> {
                         Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                         SizedBox(width: 5,),
 
-
-                        Center(child: Text("status",style: TextStyle(fontSize: 10,fontWeight: FontWeight.w600,color: yellow),)),
+//ifscCode
+                        Center(
+                            child:
+                            Text(bankdetails != null &&
+                                bankdetails['bankDetails'] != null &&
+                                bankdetails['bankDetails']['ifscCode'] != null &&
+                                bankdetails['bankDetails']['ifscCode'] != null
+                                ? bankdetails['bankDetails']['ifscCode']
+                                : "NIL",
+                              overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)),
                       ],
                     ),
                   ),
@@ -111,7 +173,13 @@ class _banketailslistState extends State<banketailslist> {
                         SizedBox(width: 84,),
                         Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                         SizedBox(width: 5,),
-                        Text("phone",style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                        Text(bankdetails != null &&
+                            bankdetails['bankDetails'] != null &&
+                            bankdetails['bankDetails']['bank'] != null &&
+                            bankdetails['bankDetails']['bank'] != null
+                            ? bankdetails['bankDetails']['bank']
+                            : "NIL",
+                          overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),)
 
 
                       ],
@@ -129,7 +197,13 @@ class _banketailslistState extends State<banketailslist> {
                         SizedBox(width: 35,),
                         Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                         SizedBox(width: 5,),
-                        Text("email",style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                        Text(bankdetails != null &&
+                            bankdetails['bankDetails'] != null &&
+                            bankdetails['bankDetails']['aadhar'] != null &&
+                            bankdetails['bankDetails']['aadhar'] != null
+                            ? bankdetails['bankDetails']['aadhar']
+                            : "NIL",
+                          overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),),
 
                         SizedBox(width: 28,),
 
@@ -148,7 +222,13 @@ class _banketailslistState extends State<banketailslist> {
                         SizedBox(width: 22,),
                         Text(":",style: TextStyle(color: textgrey1,fontSize: 12)),
                         SizedBox(width: 5,),
-                        Text('packageamount',style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11),),
+                        Text(bankdetails != null &&
+                            bankdetails['bankDetails'] != null &&
+                            bankdetails['bankDetails']['pan'] != null &&
+                            bankdetails['bankDetails']['pan'] != null
+                            ? bankdetails['bankDetails']['pan']
+                            : "NIL",
+                          overflow: TextOverflow.ellipsis,style: TextStyle(color: bg1,fontWeight: FontWeight.w600,fontSize: 11,),),
 
                         SizedBox(width: 28,),
 
@@ -169,6 +249,23 @@ class _banketailslistState extends State<banketailslist> {
                   )),
 
             ),
+          ):
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 150),
+            child: Center(
+              child:  Column(
+                children: [
+                  SizedBox(height: 60,),
+                  Image.asset(
+                    'assets/logo/nouser.png',
+                    height: 150,
+                  ),
+                  SizedBox(height: 10,),
+                  Text("Please add  bank details..!!",
+                    style: TextStyle(color: bg1,fontSize: 17,fontWeight: FontWeight.w700),)
+                ],
+              ),
+            ),
           ),
 
         ],
@@ -176,7 +273,8 @@ class _banketailslistState extends State<banketailslist> {
 
 
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: (bankdetails != null && bankdetails['sts'] == "00")
+          ? FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         child: Icon(Icons.add),
         backgroundColor: yellow,
@@ -186,7 +284,8 @@ class _banketailslistState extends State<banketailslist> {
             MaterialPageRoute(builder: (context) => bankaccount()),
           );
         },
-      ),
+      )
+          : null,
 
 
     );

@@ -196,69 +196,79 @@ class _walletState extends State<wallet> {
 
 
           Expanded(
-
             child: ListView.builder(
-                itemCount: walletlisttransation['result'].length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  color: yellow, borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child: Image.asset(
-                                "assets/logo/trnss.png",
-                                height: 20,
-                                width: 20,
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text( walletlisttransation['result'][index]['transaction']['name'],
-                                    style: TextStyle(color: bg1, fontSize: 10)),
-                                Text("sponserName", style: TextStyle(color: bg1, fontSize: 10)),
-                              ],
-                            ),
-                            Expanded(child: SizedBox()),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(walletlisttransation['result'][index]['transaction']['amount'].toString(),
-                                  style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(walletlisttransation['result'][index]['formattedDate'], style: TextStyle(fontSize: 9, color: bg1)),
-                            Container(
+              itemCount: walletlisttransation['result'] != null ? walletlisttransation['result'].length : 0,
+              itemBuilder: (BuildContext context, int index) {
+                if (walletlisttransation['result'] == null) {
+// Handle the case where 'result' is null, you can show a placeholder or handle it according to your needs.
+                  return Container(); // Placeholder container, you can replace it with your custom logic.
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: yellow, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Image.asset(
+                              "assets/logo/trnss.png",
                               height: 20,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                  color: yellow,
-                                  borderRadius: BorderRadius.all(Radius.circular(5))),
-                              child: Center(
-                                  child: Text(walletlisttransation['result'][index]['transaction']['status'],
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ))),
-                            )
-                          ],
-                        ),
-                        Divider(thickness: 0.1, color: bg1),
-                      ],
-                    ),
-                  );
-                }),
+                              width: 20,
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text( walletlisttransation != null &&
+                          walletlisttransation['result'] != null &&
+                          walletlisttransation['result'][index]['transaction'] != null &&
+                          walletlisttransation['result'][index]['transaction']['name'] != null
+                          ? walletlisttransation['result'][index]['transaction']['name']
+                              : "Commission Amount",
+                                  style: TextStyle(color: bg1, fontSize: 10)),
+                              Text("Credited successfully", style: TextStyle(color: bg1, fontSize: 10)),
+                            ],
+                          ),
+                          Expanded(child: SizedBox()),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(walletlisttransation['result'][index]['transaction']['amount'].toString(),
+                                style: TextStyle(color: bg1, fontSize: 12, fontWeight: FontWeight.w800)),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(walletlisttransation['result'][index]['formattedDate'], style: TextStyle(fontSize: 9, color: bg1)),
+                          Container(
+                            height: 20,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(5))),
+                            child: Center(
+                                child: Text(walletlisttransation['result'][index]['transaction']['status'],
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ))),
+                          )
+                        ],
+                      ),
+                      Divider(thickness: 0.1, color: bg1),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

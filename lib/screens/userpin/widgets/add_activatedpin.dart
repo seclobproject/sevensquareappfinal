@@ -22,6 +22,8 @@ class _addactivatedpinState extends State<addactivatedpin> {
   String? phone;
   String? profession;
   String? district;
+  bool isLoading = false;
+  bool isButtonDisabled = true;
 
 
   Future addactivepin() async {
@@ -43,6 +45,76 @@ class _addactivatedpinState extends State<addactivatedpin> {
       MaterialPageRoute(builder: (context) => BottomTabsScreen()),
     );
 
+  }
+
+
+
+  void updateButtonState() {
+    setState(() {
+      isButtonDisabled =
+          name == null ||
+          email == null ||
+          phone == null ||
+          profession == null ||
+          district == null;
+    });
+  }
+
+  bool validateForm() {
+    if (name == null || name!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid name'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (email == null ||
+        !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+            .hasMatch(email!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid email address'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (phone == null || phone!.length < 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Phone number must be at least 10 numbers long'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (profession == null || profession!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a  profession'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (district == null || district!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a  district'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+
+    return true;
   }
 
   @override
@@ -87,7 +159,7 @@ class _addactivatedpinState extends State<addactivatedpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -124,7 +196,7 @@ class _addactivatedpinState extends State<addactivatedpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -160,7 +232,7 @@ class _addactivatedpinState extends State<addactivatedpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -197,7 +269,7 @@ class _addactivatedpinState extends State<addactivatedpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -233,7 +305,7 @@ class _addactivatedpinState extends State<addactivatedpin> {
                     ),
 
                     Container(
-                      height: 40,
+                      height: 60,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
@@ -265,20 +337,60 @@ class _addactivatedpinState extends State<addactivatedpin> {
 
 
                     InkWell(
-                      onTap: (){
-                        addactivepin();
+                      onTap: () {
+                        if (validateForm()) {
+                          // Set isLoading to true to show the loader
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          // Perform your asynchronous operation, for example, createleave()
+                          addactivepin().then((result) {
+                            // After the operation is complete, set isLoading to false
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          height: 40,
-                          width: 444,
-                          decoration: BoxDecoration(
-                              color: yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          child: Center(
-                              child: Text("Submit",style: TextStyle(color: sevensgbg,fontWeight: FontWeight.w700),)),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 444,
+                              decoration: BoxDecoration(
+                                color: yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Submit",
+                                  style: TextStyle(
+                                    color: sevensgbg,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Loader widget
+                            if (isLoading)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: bg1,
+                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),

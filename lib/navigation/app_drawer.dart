@@ -27,10 +27,10 @@ class _appdrawerState extends State<appdrawer> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => loginpage()),
-    );
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) => loginpage()),
+            (route) => false);
   }
 
 
