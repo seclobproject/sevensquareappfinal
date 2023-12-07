@@ -5,6 +5,10 @@ import '../../../resources/color.dart';
 import '../../../services/userpin_service.dart';
 import '../../../support/logger.dart';
 
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
+import 'package:country_pickers/utils/utils.dart';
+
 class addactivatedpin extends StatefulWidget {
   const addactivatedpin({super.key});
 
@@ -24,27 +28,70 @@ class _addactivatedpinState extends State<addactivatedpin> {
   String? district;
   bool isLoading = false;
   bool isButtonDisabled = true;
+  Country? selectedCountry;
 
+
+  // Future addactivepin() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   userid = prefs.getString('userid');
+  //   var reqData = {
+  //     'name': name,
+  //     'email': email,
+  //     'phone':phone,
+  //     'profession':profession,
+  //     "district":district,
+  //   };
+  //   print(reqData);
+  //   var response = await UserpinService.addactivepin(reqData);
+  //   log.i('leave create . $response');
+  //
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => BottomTabsScreen()),
+  //   );
+  //
+  // }
 
   Future addactivepin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userid = prefs.getString('userid');
-    var reqData = {
-      'name': name,
-      'email': email,
-      'phone':phone,
-      'profession':profession,
-      "district":district,
-    };
-    print(reqData);
-    var response = await UserpinService.addactivepin(reqData);
-    log.i('leave create . $response');
+    try {
+      setState(() {});
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      userid = prefs.getString('userid');
+      var reqData = {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'profession': profession,
+        "district":district,
+      };
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BottomTabsScreen()),
-    );
+      var response = await UserpinService.addactivepin(reqData);
+      log.i('leave create . $response');
 
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomTabsScreen()),
+      );
+    } catch (error) {
+      // Handle specific error cases
+      if (error.toString().contains("User already exists!")) {
+        // Show a SnackBar or AlertDialog to inform the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('User already exists!'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        // Handle other errors or rethrow them if not handled here
+        throw ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('User already exists!'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    }
   }
 
 
@@ -231,33 +278,94 @@ class _addactivatedpinState extends State<addactivatedpin> {
                           child: Text("Phone Number ",style: TextStyle(color: bg1),)),
                     ),
 
+                    // Container(
+                    //   height: 60,
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: 20),
+                    //     child: TextField(
+                    //       autocorrect: true,
+                    //       onChanged: (text) {
+                    //         setState(() {
+                    //           phone=text;
+                    //         });
+                    //       },
+                    //       style: TextStyle(
+                    //           color: Colors.white),
+                    //       decoration: InputDecoration(
+                    //         hintText: '',
+                    //         hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                    //         // filled: true,
+                    //         // fillColor: Colors.white70,
+                    //         enabledBorder: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    //           borderSide: BorderSide(color: bg1, width: 1),
+                    //         ),
+                    //         focusedBorder: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    //           borderSide: BorderSide(color:  bg1),
+                    //         ),
+                    //       ),),
+                    //   ),
+                    // ),
+
                     Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
                       height: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: bg1, // Set your desired border color here
+                          width: 1.0, // Set your desired border width here
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)), // Set your desired border radius here
+                      ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          autocorrect: true,
-                          onChanged: (text) {
-                            setState(() {
-                              phone=text;
-                            });
-                          },
-                          style: TextStyle(
-                              color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: '',
-                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                            // filled: true,
-                            // fillColor: Colors.white70,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: bg1, width: 1),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            CountryPickerDropdown(
+                              iconEnabledColor: bg1,
+                              dropdownColor: sevensgbg,
+                              iconSize: 20,
+                              initialValue: 'IN',
+                              itemBuilder: (Country country) {
+                                return Row(
+                                  children: <Widget>[
+                                    CountryPickerUtils.getDefaultFlagImage(country),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      "+${country.phoneCode}",
+                                      style: TextStyle(fontSize: 12, color: Colors.white), // Change text color here
+                                    ),
+                                  ],
+                                );
+                              },
+                              onValuePicked: (Country country) {
+                                setState(() {
+                                  selectedCountry = country;
+                                });
+                              },
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color:  bg1),
+
+                            Expanded(
+                              child: TextField(
+                                autocorrect: true,
+                                cursorWidth: 1.0,
+                                cursorColor: bg1,
+                                cursorHeight: 12,
+                                keyboardType: TextInputType.number,
+                                onChanged: (text) {
+                                  setState(() {
+                                    phone = text;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  border: InputBorder.none, // Remove the underline border
+                                ),
+                                style: TextStyle(color: bg1),
+                              ),
                             ),
-                          ),),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -375,21 +483,21 @@ class _addactivatedpinState extends State<addactivatedpin> {
                               ),
                             ),
                             // Loader widget
-                            if (isLoading)
-                              Positioned.fill(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: bg1,
-                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            // if (isLoading)
+                            //   Positioned.fill(
+                            //     child: Container(
+                            //       decoration: BoxDecoration(
+                            //         color: Colors.black.withOpacity(0.5),
+                            //         borderRadius: BorderRadius.all(Radius.circular(10)),
+                            //       ),
+                            //       child: Center(
+                            //         child: CircularProgressIndicator(
+                            //           color: bg1,
+                            //           valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
                           ],
                         ),
                       ),

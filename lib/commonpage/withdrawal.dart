@@ -180,43 +180,43 @@ class _withdrawalState extends State<withdrawal> {
 
           SizedBox(height: 25,),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                height: 25,
-                decoration: BoxDecoration(
-                  border: Border.all(color: blackgray), // Set the border color
-                  borderRadius: BorderRadius.circular(5), // Set border radius if desired
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: DropdownButton(
-                      elevation: 0,
-                      value: dropdownvalue,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      items: items.map((String item) {
-                        return DropdownMenuItem(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: TextStyle(color: Colors.grey, fontSize: 10), // Set text color to black
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue = newValue!;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: Align(
+          //     alignment: Alignment.bottomRight,
+          //     child: Container(
+          //       height: 25,
+          //       decoration: BoxDecoration(
+          //         border: Border.all(color: blackgray), // Set the border color
+          //         borderRadius: BorderRadius.circular(5), // Set border radius if desired
+          //       ),
+          //       child: DropdownButtonHideUnderline(
+          //         child: Padding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 5),
+          //           child: DropdownButton(
+          //             elevation: 0,
+          //             value: dropdownvalue,
+          //             icon: Icon(Icons.keyboard_arrow_down),
+          //             items: items.map((String item) {
+          //               return DropdownMenuItem(
+          //                 value: item,
+          //                 child: Text(
+          //                   item,
+          //                   style: TextStyle(color: Colors.grey, fontSize: 10), // Set text color to black
+          //                 ),
+          //               );
+          //             }).toList(),
+          //             onChanged: (String? newValue) {
+          //               setState(() {
+          //                 dropdownvalue = newValue!;
+          //               });
+          //             },
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
 
           SizedBox(height: 10,),

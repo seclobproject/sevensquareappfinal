@@ -46,7 +46,7 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
     // Convert the entered amount to a double
     double enteredAmount = double.parse(discountedPriceController.text);
 
-    if (enteredAmount < 500) {
+    if (enteredAmount < 450) {
       // Show a snackbar with the error message
       final snackBar = SnackBar(
         content: Text('Amount must be 500 or more'),
@@ -72,7 +72,6 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
       );
     }
   }
-
 
 
 

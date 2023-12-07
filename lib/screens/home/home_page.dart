@@ -161,7 +161,7 @@ class _homeState extends State<home> {
                   GestureDetector(
                     onTap: () {
                       _scaffoldKey.currentState?.openDrawer();
-                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => myHome()));
                     },
                     child: SvgPicture.asset(
                       'assets/svg/drawrwhite.svg',

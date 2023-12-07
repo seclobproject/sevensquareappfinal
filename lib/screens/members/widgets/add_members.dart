@@ -470,6 +470,9 @@ import '../../../navigation/bottom_tabs_screen.dart';
 import '../../../resources/color.dart';
 import '../../../services/members_service.dart';
 import '../../../support/logger.dart';
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
+import 'package:country_pickers/utils/utils.dart';
 
 class AddMembers extends StatefulWidget {
   const AddMembers({Key? key}) : super(key: key);
@@ -484,6 +487,7 @@ class _AddMembersState extends State<AddMembers> {
   bool hidePassword = true;
   bool isButtonDisabled = true;
   bool isLoading = false;
+  Country? selectedCountry;
 
   List package = [];
 
@@ -528,7 +532,7 @@ class _AddMembersState extends State<AddMembers> {
         // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Not authenticated, token failed'),
+            content: Text('User already exists!'),
             duration: Duration(seconds: 3),
           ),
         );
@@ -749,33 +753,62 @@ class _AddMembersState extends State<AddMembers> {
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       height: 60,
-                      child: TextField(
-                        autocorrect: true,
-                        cursorWidth: 1.0,
-                        cursorColor: bg1,
-                        cursorHeight: 12,
-                          keyboardType: TextInputType.number,
-                        onChanged: (text) {
-                          setState(() {
-                            phone=text;
-                          });
-                        },
-                        style: TextStyle(
-                            color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: '',
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-                          // filled: true,
-                          // fillColor: Colors.white70,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: bg1, width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color:  bg1),
-                          ),
-                        ),),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: bg1, // Set your desired border color here
+                          width: 1.0, // Set your desired border width here
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)), // Set your desired border radius here
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            CountryPickerDropdown(
+                              iconEnabledColor: bg1,
+                              dropdownColor: sevensgbg,
+                              iconSize: 20,
+                              initialValue: 'IN',
+                              itemBuilder: (Country country) {
+                                return Row(
+                                  children: <Widget>[
+                                    CountryPickerUtils.getDefaultFlagImage(country),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      "+${country.phoneCode}",
+                                      style: TextStyle(fontSize: 12, color: Colors.white), // Change text color here
+                                    ),
+                                  ],
+                                );
+                              },
+                              onValuePicked: (Country country) {
+                                setState(() {
+                                  selectedCountry = country;
+                                });
+                              },
+                            ),
+
+                            Expanded(
+                              child: TextField(
+                                autocorrect: true,
+                                cursorWidth: 1.0,
+                                cursorColor: bg1,
+                                cursorHeight: 12,
+                                keyboardType: TextInputType.number,
+                                onChanged: (text) {
+                                  setState(() {
+                                    phone = text;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  border: InputBorder.none, // Remove the underline border
+                                ),
+                                style: TextStyle(color: bg1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
 
                     Padding(
@@ -937,6 +970,11 @@ class _AddMembersState extends State<AddMembers> {
                             setState(() {
                               isLoading = false;
                             });
+
+                            // Add a delay to keep the loader visible for a certain duration
+                            Future.delayed(Duration(seconds: 2), () {
+                              // After the delay, you can perform any additional actions if needed
+                            });
                           });
                         }
                       },
@@ -961,26 +999,12 @@ class _AddMembersState extends State<AddMembers> {
                                 ),
                               ),
                             ),
-                            // Loader widget
-                            if (isLoading)
-                              Positioned.fill(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                   color: bg1,
-                                      valueColor: AlwaysStoppedAnimation<Color>(sevensgbg),
-                                    ),
-                                  ),
-                                ),
-                              ),
+
                           ],
                         ),
                       ),
                     ),
+
 
 
                     SizedBox(height: 20,),

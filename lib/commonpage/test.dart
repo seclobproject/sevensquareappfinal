@@ -1,65 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
+import 'package:country_pickers/utils/utils.dart';
 
 
 
-class MyDropdown extends StatefulWidget {
+class myHome extends StatefulWidget {
   @override
-  _MyDropdownState createState() => _MyDropdownState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyDropdownState extends State<MyDropdown> {
-  String? selectedValue;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedValue = 'Option 1';
-  }
+class _MyHomePageState extends State<myHome> {
+  Country? selectedCountry;
+  String phone = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
-            'Select an option:',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10.0),
-          DropdownButton<String>(
-            value: selectedValue,
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedValue = newValue;
-              });
-            },
-            items: ['Option 1', 'Option 2', 'Option 3']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            isExpanded: true,
-            icon: Icon(Icons.arrow_drop_down),
-            iconSize: 24.0,
-            elevation: 16,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            underline: Container(
-              height: 2,
-              color: Colors.blue,
+      appBar: AppBar(
+        title: Text('Country Code Picker Example'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 60,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black, // Set your desired border color here
+                  width: 1.0, // Set your desired border width here
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)), // Set your desired border radius here
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    CountryPickerDropdown(
+                      initialValue: 'IN',
+                      itemBuilder: (Country country) {
+                        return Row(
+                          children: <Widget>[
+                            CountryPickerUtils.getDefaultFlagImage(country),
+                            SizedBox(width: 8.0),
+                            Text(
+                              "+${country.phoneCode}",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        );
+                      },
+                      onValuePicked: (Country country) {
+                        setState(() {
+                          selectedCountry = country;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: TextField(
+                        autocorrect: true,
+                        cursorWidth: 1.0,
+                        cursorColor: Colors.black,
+                        cursorHeight: 12,
+                        keyboardType: TextInputType.number,
+                        onChanged: (text) {
+                          setState(() {
+                            phone = text;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none, // Remove the underline border
+                        ),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () {
-              // Perform some action with the selected value
-              print('Selected value: $selectedValue');
-            },
-            child: Text('Submit'),
-          ),
-        ],
+
+            SizedBox(height: 16),
+
+          ],
+        ),
       ),
     );
   }
