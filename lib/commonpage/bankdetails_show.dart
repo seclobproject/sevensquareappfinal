@@ -69,6 +69,27 @@ class _banketailslistState extends State<banketailslist> {
       )
           :Column(
         children: [
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.security,
+                  color: Colors.grey,
+                  size: 17.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                ),
+                SizedBox(width: 10,),
+
+                Text("Enter the bank information carefully, if you enter it incorrectly,\nwe won't be held responsible.",
+                  style: TextStyle(color: bg1,fontSize: 10),)
+
+              ],
+            ),
+          ),
+
           bankdetails['sts'] == "01" ?
           Padding(
             padding:  EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -237,6 +258,7 @@ class _banketailslistState extends State<banketailslist> {
                   ),
 
                   SizedBox(height: 20,),
+
 
                 ],
               ),

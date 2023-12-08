@@ -57,7 +57,7 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
     } else {
       // Proceed with the withdrawal request
       var reqData = {
-        'amount': discountedPriceController.text,
+        'amount': amountController.text,
       };
 
       var response = await WithdrawalService.withdrawal(reqData);
@@ -70,6 +70,8 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
         context,
         MaterialPageRoute(builder: (context) => withdrawal()),
       );
+
+
     }
   }
 
@@ -193,9 +195,12 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                           ),
                         ),
                         SizedBox(width: 10,),
+
                         GestureDetector(
                           onTap: () {
-                            addammount();
+                            setState(() {
+                              addammount();
+                            });
                           },
                           child: Container(
                             height: 25,
@@ -208,6 +213,8 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
                                 child: Text("Submit", style: TextStyle(color: sevensgbg, fontWeight: FontWeight.w600),)),
                           ),
                         ),
+
+
                       ],
                     ),
                   ),
@@ -230,3 +237,5 @@ class _withdrawalrequstState extends State<withdrawalrequst> {
     }
   }
 }
+
+
